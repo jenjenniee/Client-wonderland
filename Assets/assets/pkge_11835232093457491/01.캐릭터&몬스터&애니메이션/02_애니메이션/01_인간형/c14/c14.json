@@ -1,0 +1,24 @@
+{ "skeleton": { "images": "D:/3차/상상나래동물농장/2. 애니메이션/6/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Leg", "bone": "root", "attachment": "Leg" },
+	{ "name": "Body", "bone": "root", "attachment": "Body" },
+	{ "name": "Head1", "bone": "root", "attachment": "Head1" }
+],
+"skins": {
+	"default": {
+		"Leg": {
+			"Leg": { "x": 248.5, "y": -525.5, "width": 79, "height": 81 }
+		},
+		"Body": {
+			"Body": { "x": 263.5, "y": -432, "width": 189, "height": 170 }
+		},
+		"Head1": {
+			"Head1": { "x": 261.5, "y": -208.5, "width": 337, "height": 357 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
