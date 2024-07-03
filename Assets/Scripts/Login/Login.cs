@@ -60,7 +60,7 @@ public class Login : LoginBase
 				//BackendChartData.LoadAllChart();
 
 				// Lobby ������ �̵�
-				Utils.LoadScene(SceneNames.Lobby);
+				Utils.LoadScene(SceneNames.Loby);
 			}
 			// �α��� ����
 			else

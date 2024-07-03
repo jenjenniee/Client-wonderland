@@ -1,6 +1,6 @@
 using UnityEngine.SceneManagement;
 
-public enum SceneNames { Logo=0, Login, Lobby, Game, }
+public enum SceneNames { Logo=0, Login, Loby, Game, }
 
 public static class Utils
 {
