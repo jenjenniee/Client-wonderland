@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class StageInfoManager : MonoBehaviour
 {
-    public GameObject infoUI;
-    private CanvasGroup canvasGroup;
+    public GameObject infoUI;           // 클릭 시 띄워지는 정보창
+    public string targetStage;          // 한 번 더 클릭 시 넘어가는 stage
+    private CanvasGroup canvasGroup;    // alpha 조정을 위함
     private int clickCount = 0;
 
     // Start is called before the first frame update
@@ -20,8 +21,9 @@ public class StageInfoManager : MonoBehaviour
         infoUI.SetActive(true);
         canvasGroup.alpha = 1;
         clickCount++;
-        if (clickCount == 2) { 
+        if (clickCount == 2) {
             // 한 번 더 클릭하면 스테이지 진입.
+            Utils.LoadScene(targetStage);
         }
     }
 

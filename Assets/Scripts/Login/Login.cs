@@ -56,11 +56,12 @@ public class Login : LoginBase
 			{
 				SetMessage($"{inputFieldID.text}님 환영합니다.");
 
-				// ��� ��Ʈ ������ �ҷ�����
-				//BackendChartData.LoadAllChart();
+                // ��� ��Ʈ ������ �ҷ�����
+                //BackendChartData.LoadAllChart();
 
-				// Lobby ������ �̵�
-				Utils.LoadScene(SceneNames.Loby);
+
+                // Lobby ������ �̵�
+                Utils.LoadScene(SceneNames.Loby);
 			}
 			// �α��� ����
 			else
