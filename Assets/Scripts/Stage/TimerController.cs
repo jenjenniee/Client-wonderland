@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimerController : MonoBehaviour
 {
+    public bool onTimer = true;
+
     public GameObject timer;
     public float duration;
     public TextMeshProUGUI text;
@@ -26,12 +28,15 @@ public class TimerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (elapsedTime < duration)
+        if (onTimer)
         {
-            elapsedTime += Time.deltaTime;
-            float newWidth = Mathf.Lerp(initialScale.x, 0, elapsedTime / duration);
-            timer.transform.localScale = new Vector3 (newWidth, initialScale.y, initialScale.z);
-            text.text = $"{Mathf.Floor(duration - elapsedTime)}ÃÊ";
+            if (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float newWidth = Mathf.Lerp(initialScale.x, 0, elapsedTime / duration);
+                timer.transform.localScale = new Vector3(newWidth, initialScale.y, initialScale.z);
+                text.text = $"{Mathf.Ceil(duration - elapsedTime)}ÃÊ";
+            }
         }
     }
 
@@ -43,5 +48,6 @@ public class TimerController : MonoBehaviour
         this.duration = duration;
         elapsedTime = 0f;
         timer.transform.localScale = initialScale;
+        onTimer = true;
     }
 }
