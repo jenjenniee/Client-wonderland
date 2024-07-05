@@ -35,7 +35,7 @@ public class LoginBase : MonoBehaviour
 	protected void GuideForIncorrectlyEnteredData(Image image, string msg)
 	{
 		textMessage.text = msg;
-		image.color		 = Color.red;
+		image.color		 = new Vector4(246f/255f, 152f/255f, 152f/255f, 1f);
 	}
 
 	/// <summary>

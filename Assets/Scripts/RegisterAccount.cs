@@ -23,12 +23,25 @@ public class RegisterAccount : LoginBase
 	private	TMP_InputField		inputFieldEmail;		// E-mail 필드 텍스트 정보 추출
 
 	[SerializeField]
-	private	Button				btnRegisterAccount;		// "계정 생성" 버튼 (상호작용 가능/불가능)
+	private	Button				btnRegisterAccount;     // "계정 생성" 버튼 (상호작용 가능/불가능)
+
+	[SerializeField]
+	private GameObject registerAccountUI;
 
 	/// <summary>
-	/// "계정 생성" 버튼을 눌렀을 때 호출
+	/// "회원 가입" 버튼을 눌렀을 때 호출
 	/// </summary>
-	public void OnClickRegisterAccount()
+	public void OnClickCreateNewAccount()
+	{
+        registerAccountUI.SetActive(true);
+        ResetUI(imageID, imagePW, imageConfirmPW, imageEmail);
+    }
+
+
+    /// <summary>
+    /// "계정 생성" 버튼을 눌렀을 때 호출
+    /// </summary>
+    public void OnClickRegisterAccount()
 	{
 		// 매개변수로 입력한 InputField UI의 색상과 Message 내용 초기화
 		ResetUI(imageID, imagePW, imageConfirmPW, imageEmail);

@@ -16,8 +16,21 @@ public class Login : LoginBase
 	private	TMP_InputField		inputFieldPW;		// PW 필드 텍스트 정보 추출
 
 	[SerializeField]
-	private	Button				btnLogin;			// 로그인 버튼(상호작용 가능/불가능)
+	private	Button				btnLogin;           // 로그인 버튼(상호작용 가능/불가능)
+
+	[SerializeField]
+	private GameObject loginUI;
 	
+	/// <summary>
+	/// 회원가입에서 로그인으로 넘어올 때 호출
+	/// </summary>
+	public void OnClickCloseRegister()
+	{
+		loginUI.SetActive(true);
+		ResetUI(imageID, imagePW);
+	}
+
+
 	/// <summary>
 	/// "로그" 버튼을 눌렀을 때 호출
 	/// </summary>
