@@ -48,6 +48,7 @@ public class TimerController : MonoBehaviour
         this.duration = duration;
         elapsedTime = 0f;
         timer.transform.localScale = initialScale;
+        text.text = $"{Mathf.Ceil(duration - elapsedTime)}√ ";
         onTimer = true;
     }
 }
