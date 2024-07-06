@@ -20,13 +20,15 @@ public class ProblemController : MonoBehaviour
     private int problemNumber = 0;
 
     private TimerController timerController;
+    [SerializeField]
+    private SentenceStageManager sentenceStageManager;
     //private bool solvingProblem = false;
 
     private void Start()
     {
         timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
         timerController.onTimer = false;
-        StartCoroutine(SetNewProblem(7f));
+        StartCoroutine(SetNewProblem(5f));
         
         foreach (GameObject animal in animals)
         {
@@ -72,15 +74,26 @@ public class ProblemController : MonoBehaviour
 
         timerController.NewProblemTimer(20f);
         timerController.onTimer = false;
-        problemNumber++;
-        textProblemNumber.text = $"문제{problemNumber}.";
 
-        //Debug.Log("A New Problem Set.");
-        for (int i = 0; i < 4; i++)
+        // 문제 번호 증가
+        problemNumber++;
+
+        // 문제수가 00에 도달하면 다음 스테이지로
+        if (problemNumber == 3)
         {
-            StartCoroutine(AnimalAppear(i * 0.3f, animals[i]));
+            sentenceStageManager.NextStage();
         }
-        StartCoroutine(StartProblem(3f));
+        else
+        {
+            textProblemNumber.text = $"문제{problemNumber}.";
+
+            //Debug.Log("A New Problem Set.");
+            for (int i = 0; i < 4; i++)
+            {
+                StartCoroutine(AnimalAppear(Random.Range(0f, 1f), animals[i]));
+            }
+            StartCoroutine(StartProblem(3f));
+        }
     }
 
     public IEnumerator StartProblem(float delayTime)
