@@ -6,15 +6,16 @@ using UnityEngine.UI;
 public class PanelManager : MonoBehaviour
 {
     public GameObject panel;
+    private bool isPanel = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        panel.SetActive(false);
+        panel.SetActive(isPanel);
     }
 
     public void TogglePanel()
     {
-        panel.SetActive(!panel.activeSelf);
+        panel.SetActive(!isPanel);
     }
 }
