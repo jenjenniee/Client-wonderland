@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ProblemController : MonoBehaviour
@@ -7,15 +8,33 @@ public class ProblemController : MonoBehaviour
     //private int problemType = 1;    //문제 유형 (1: 객관식, 2: 주관식(OCR))
 
     [SerializeField]
-    private GameObject[] choiceButton = new GameObject[4];  // 선택 버튼
+    private CanvasGroup[] choiceButton = new CanvasGroup[4];  // 선택 버튼
     [SerializeField]
     private GameObject[] animals = new GameObject[4];       // 해당 동물
 
+    [SerializeField]
+    private TextMeshProUGUI textProblemNumber;
+    [SerializeField]
+    private TextMeshProUGUI textProblem;
+
+    private int problemNumber = 0;
+
     private TimerController timerController;
+    [SerializeField]
+    private SentenceStageManager sentenceStageManager;
+    //private bool solvingProblem = false;
 
     private void Start()
     {
         timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
+        timerController.onTimer = false;
+        StartCoroutine(SetNewProblem(5f));
+        
+        foreach (GameObject animal in animals)
+        {
+            animal.SetActive(false);
+        }
+        
     }
 
     /// <summary>
@@ -32,19 +51,60 @@ public class ProblemController : MonoBehaviour
         {
             if (i != chosenNumber)
             {
-                choiceButton[i].SetActive(false);
+                choiceButton[i].alpha = 0f;
                 animals[i].SetActive(false);
             }
         }
         // 선택 된 객체는 3초 동안 정답임을 알려주는 애니메이션
-        StartCoroutine(SetNewProblem(chosenNumber));
+        StartCoroutine(ChoiseAnimation(chosenNumber));
     }
 
-    public IEnumerator SetNewProblem(int chosenNumber)
+    public IEnumerator ChoiseAnimation(int chosenNumber)
     {
         yield return new WaitForSecondsRealtime(3f);
-        choiceButton[chosenNumber].SetActive(false);
+        choiceButton[chosenNumber].alpha = 0f;
         animals[chosenNumber].SetActive(false);
+
+        StartCoroutine(SetNewProblem(0f));
+    }
+
+    public IEnumerator SetNewProblem(float delayTime)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+
         timerController.NewProblemTimer(20f);
+        timerController.onTimer = false;
+
+        // 문제 번호 증가
+        problemNumber++;
+
+        // 문제수가 00에 도달하면 다음 스테이지로
+        if (problemNumber == 3)
+        {
+            sentenceStageManager.NextStage();
+        }
+        else
+        {
+            textProblemNumber.text = $"문제{problemNumber}.";
+
+            //Debug.Log("A New Problem Set.");
+            for (int i = 0; i < 4; i++)
+            {
+                StartCoroutine(AnimalAppear(Random.Range(0f, 1f), animals[i]));
+            }
+            StartCoroutine(StartProblem(3f));
+        }
+    }
+
+    public IEnumerator StartProblem(float delayTime)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+        timerController.onTimer = true;
+    }
+
+    public IEnumerator AnimalAppear(float delayTime, GameObject obj)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+        obj.SetActive(true);
     }
 }

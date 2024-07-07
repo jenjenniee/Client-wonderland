@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class TimerController : MonoBehaviour
 {
-    public bool onTimer = true;
+    public bool onTimer = true;     // 타이머 on/off
 
-    public GameObject timer;
-    public float duration;
-    public TextMeshProUGUI text;
+    public GameObject timer;        // "Gauge Front" : 타이머 바
+    public float duration;          // 타이머 시간
+    public TextMeshProUGUI text;    // 남은 시간 출력하는 텍스트
 
-    private float elapsedTime;
-    private Vector3 initialScale;
+    private float elapsedTime;      // 경과시간
+    private Vector3 initialScale;   // 초기 타이머 바 가로 길이 저장용
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +48,7 @@ public class TimerController : MonoBehaviour
         this.duration = duration;
         elapsedTime = 0f;
         timer.transform.localScale = initialScale;
+        text.text = $"{Mathf.Ceil(duration - elapsedTime)}초";
         onTimer = true;
     }
 }
