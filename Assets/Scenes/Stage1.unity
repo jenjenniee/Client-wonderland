@@ -2173,7 +2173,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3,210
+  m_text: '0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
   m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
@@ -3059,6 +3061,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609404323}
   m_CullTransparentMesh: 1
+--- !u!1 &1720995401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720995402}
+  m_Layer: 0
+  m_Name: GetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1720995402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720995401}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.264536, y: 11.870097, z: -10.215097}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1736021191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3392,9 +3425,16 @@ MonoBehaviour:
   - {fileID: 824537931}
   - {fileID: 2100718351}
   - {fileID: 136289889}
+  textAnswer:
+  - {fileID: 3571490407775458611}
+  - {fileID: 4951519786605051852}
+  - {fileID: 4951519785133224987}
+  - {fileID: 4951519786556067508}
   textProblemNumber: {fileID: 826178425}
   textProblem: {fileID: 1609404325}
   sentenceStageManager: {fileID: 519913253}
+  theme: carousel
+  stage: 1
 --- !u!4 &2025958834
 Transform:
   m_ObjectHideFlags: 0
@@ -4745,3 +4785,4 @@ SceneRoots:
   - {fileID: 1191286884}
   - {fileID: 519913254}
   - {fileID: 2021761733}
+  - {fileID: 1720995402}
