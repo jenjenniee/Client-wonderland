@@ -60,6 +60,7 @@ public class ProblemController : MonoBehaviour
     private string getProblemUrl;           // server url
     private string postAnswerUrl;
     QuestionData[] problemData;             // problem data from server. 10 problems get into this variable.
+    public TextMeshProUGUI tmp;
 
     private void Start()
     {
@@ -74,9 +75,31 @@ public class ProblemController : MonoBehaviour
         {
             animal.SetActive(false);
         }
-        
+        setHeart();
     }
 
+    private void setHeart() 
+    {
+        tmp.text = "" + BackendGameData.Instance.UserGameData.heart;
+    }
+
+    private void checkAnswer(string jsonResponse) 
+    {
+        QuestionResponseData responseData = JsonUtility.FromJson<QuestionResponseData>(jsonResponse);
+        string response = responseData.message;
+        Debug.Log(response);
+        if (response == "정답 입니다")
+        {
+            Debug.Log("진입");
+            BackendGameData.Instance.IncreaseHeart(50);
+            setHeart();
+        }
+        else if (response == "오답 입니다")
+        {
+            BackendGameData.Instance.DecreaseHeart(50);
+            setHeart();
+        }
+    }
     /// <summary>
     /// ������ ������ ���� ���� �Լ�
     /// </summary>
@@ -232,8 +255,8 @@ public class ProblemController : MonoBehaviour
         }
         else
         {
-            // 응답 받기
-            Debug.Log(request.downloadHandler.text);
+            string jsonResponse = request.downloadHandler.text;
+            checkAnswer(jsonResponse);
         }
     }
 }

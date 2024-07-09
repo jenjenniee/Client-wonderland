@@ -24,12 +24,9 @@ public class SentenceStageManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI sentence;
-    public TextMeshProUGUI tmp1;
+    
 
-    private void Start()
-    {
-        tmp1.text=""+BackendGameData.Instance.UserGameData.heart;
-    }
+    
     public void NextStage()
     {
         // ���� ���������� �Ѿ�� wordStage�� ��Ȱ��ȭ.
