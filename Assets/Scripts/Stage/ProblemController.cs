@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class ProblemController : MonoBehaviour
 {
-    //private int problemType = 1;    //¹®Á¦ À¯Çü (1: °´°ü½Ä, 2: ÁÖ°ü½Ä(OCR))
+    //private int problemType = 1;    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2: ï¿½Ö°ï¿½ï¿½ï¿½(OCR))
 
     [SerializeField]
-    private CanvasGroup[] choiceButton = new CanvasGroup[4];  // ¼±ÅÃ ¹öÆ°
+    private CanvasGroup[] choiceButton = new CanvasGroup[4];  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     [SerializeField]
-    private GameObject[] animals = new GameObject[4];       // ÇØ´ç µ¿¹°
+    private GameObject[] animals = new GameObject[4];       // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     [SerializeField]
     private TextMeshProUGUI textProblemNumber;
@@ -38,15 +38,15 @@ public class ProblemController : MonoBehaviour
     }
 
     /// <summary>
-    /// °´°ü½Ä ¹®Á¦¿¡ ´ëÇÑ ¼±ÅÃ ÇÔ¼ö
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     /// <param name="chosenNumber"></param>
     public void Choice(int chosenNumber)
     {
         timerController.onTimer = false;
-        // Á¤´ä ´ëÁ¶ ·ÎÁ÷
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ¼±ÅÃ ÈÄ ÀÛ¾÷
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Û¾ï¿½
         for (int i = 0; i < 4; i++)
         {
             if (i != chosenNumber)
@@ -55,7 +55,7 @@ public class ProblemController : MonoBehaviour
                 animals[i].SetActive(false);
             }
         }
-        // ¼±ÅÃ µÈ °´Ã¼´Â 3ÃÊ µ¿¾È Á¤´äÀÓÀ» ¾Ë·ÁÁÖ´Â ¾Ö´Ï¸ÞÀÌ¼Ç
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½Ö´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
         StartCoroutine(ChoiseAnimation(chosenNumber));
     }
 
@@ -75,17 +75,17 @@ public class ProblemController : MonoBehaviour
         timerController.NewProblemTimer(20f);
         timerController.onTimer = false;
 
-        // ¹®Á¦ ¹øÈ£ Áõ°¡
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
         problemNumber++;
 
-        // ¹®Á¦¼ö°¡ 00¿¡ µµ´ÞÇÏ¸é ´ÙÀ½ ½ºÅ×ÀÌÁö·Î
-        if (problemNumber == 3)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 00ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (problemNumber == 11)
         {
             sentenceStageManager.NextStage();
         }
         else
         {
-            textProblemNumber.text = $"¹®Á¦{problemNumber}.";
+            textProblemNumber.text = $"ï¿½ï¿½ï¿½ï¿½{problemNumber}.";
 
             //Debug.Log("A New Problem Set.");
             for (int i = 0; i < 4; i++)

@@ -26,7 +26,7 @@ public class BackendGameData
     private string gameDataRowInDate = string.Empty;
 
     /// <summary>
-    /// µÚ³¡ ÄÜ¼Ö Å×ÀÌºí¿¡ »õ·Î¿î À¯Àú Á¤º¸ Ãß°¡
+    /// ï¿½Ú³ï¿½ ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     /// </summary>
     public void GameDataInsert()
     {
@@ -42,21 +42,21 @@ public class BackendGameData
         {
             if (callback.IsSuccess())
             {
-                // °ÔÀÓ Á¤º¸ÀÇ °íÀ¯°ª
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 gameDataRowInDate = callback.GetInDate();
 
-                Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ »ðÀÔ¿¡ ¼º°øÇß½À´Ï´Ù: {callback}");
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½: {callback}");
             }
             else
             {
-                Debug.LogError($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ »ðÀÔ¿¡ ½ÇÆÐÇß½À´Ï´Ù: {callback}");
+                Debug.LogError($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½: {callback}");
             }
         });
     }
 
 
     /// <summary>
-    /// µÚ³¡ ÄÜ¼Ö Å×ÀÌºí¿¡¼­ À¯Àú Á¤º¸¸¦ ºÒ·¯¿Ã ¶§ È£Ãâ
+    /// ï¿½Ú³ï¿½ ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
     /// </summary>
     public void GameDataLoad()
     {
@@ -64,22 +64,23 @@ public class BackendGameData
         {
             if (callback.IsSuccess())
             {
-                Debug.Log($"°ÔÀÓ Á¤º¸ ºÒ·¯¿À±â ¼º°ø: {callback}");
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {callback}");
+                Debug.Log("ëž„ëž¼ëž„");
 
-                // JSON ÆÄ½Ì
+                // JSON ï¿½Ä½ï¿½
                 try
                 {
                     LitJson.JsonData gameDataJson = callback.FlattenRows();
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+                        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
                     }
                     else
                     {
-                        // ºÒ·¯¿Â °ÔÀÓ Á¤º¸ÀÇ °íÀ¯°ª
+                        // ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         gameDataRowInDate = gameDataJson[0]["inDate"].ToString();
-                        // °ÔÀÓ Á¤º¸¸¦ °¢°¢ÀÇ º¯¼ö¿¡ ÀúÀå
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         userGameData.heart = int.Parse(gameDataJson[0]["heart"].ToString());
                         userGameData.equipHead = int.Parse(gameDataJson[0]["equipHead"].ToString());
 
@@ -94,8 +95,51 @@ public class BackendGameData
             }
             else
             {
-                Debug.LogError($"°ÔÀÓ Á¤º¸ ºÒ·¯¿À±â ½ÇÆÐ: {callback}");
+                Debug.LogError($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {callback}");
             }
         });
+    }
+
+    public void IncreaseHeart()
+    {
+        // heart ì¶”ê°€í•˜ê¸°
+
+        Debug.Log("heartë¥¼ 1 ì¦ê°€ì‹œí‚µë‹ˆë‹¤.");
+        userGameData.heart += 1;
+    }
+    public void DecreaseHeart()
+    {
+        // heart ì¶”ê°€í•˜ê¸°
+
+        Debug.Log("heartë¥¼ 1 ì¦ê°€ì‹œí‚µë‹ˆë‹¤.");
+        userGameData.heart -= 1;
+    }
+
+    public void UpdateGameMoney()
+    {
+        // Step 3. ê²Œìž„ ìž¬í™” ìˆ˜ì •í•˜ê¸°
+
+        if (userGameData == null)
+        {
+            Debug.LogError("ë°ì´í„°ê°€ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. Initialize í˜¹ì€ Getì„ í†µí•´ ë°ì´í„°ë¥¼ ìƒì„±í•´ì£¼ì„¸ìš”.");
+            return;
+        }
+
+        Param param = new Param();
+        param.Add("heart", userGameData.heart);
+
+        BackendReturnObject bro = null;
+
+        Debug.Log("ë‚˜ì˜ ë°ì´í„°ë¥¼ ìˆ˜ì •í•©ë‹ˆë‹¤");
+        bro = Backend.GameData.Update("GAME_MONEY", new Where(), param);
+
+        if (bro.IsSuccess())
+        {
+            Debug.Log("ë°ì´í„° ìˆ˜ì •ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. : " + bro);
+        }
+        else
+        {
+            Debug.LogError("ë°ì´í„° ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. : " + bro);
+        }
     }
 }
