@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SentenceStageManager : MonoBehaviour
 {
     [SerializeField]
@@ -24,11 +24,15 @@ public class SentenceStageManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI sentence;
+    public TextMeshProUGUI tmp1;
 
-
+    private void Start()
+    {
+        tmp1.text=""+BackendGameData.Instance.UserGameData.heart;
+    }
     public void NextStage()
     {
-        // ´ÙÀ½ ½ºÅ×ÀÌÁö·Î ³Ñ¾î°¡¸é wordStage´Â ºñÈ°¼ºÈ­.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ wordStageï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­.
         if (wordStage != null) 
         {
             StartCoroutine(FadeOutCanvasGroup(wordStageCanvas, blackBoxRenderer, 3f));

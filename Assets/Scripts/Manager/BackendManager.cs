@@ -38,6 +38,7 @@ public class BackendManager : MonoBehaviour
 			// 초기화 실패 시 statusCode 400대 에러 발생
 			Debug.LogError($"초기화 실패 : {bro}");
 		}
-	}
+        
+    }
 }
 

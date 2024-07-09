@@ -1143,6 +1143,7 @@ MonoBehaviour:
   uiGroup: {fileID: 193743734}
   background: {fileID: 264224008}
   sentence: {fileID: 1986104168}
+  tmp1: {fileID: 1107035308}
 --- !u!4 &519913254
 Transform:
   m_ObjectHideFlags: 0

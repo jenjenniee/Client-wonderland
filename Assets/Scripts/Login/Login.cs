@@ -75,7 +75,16 @@ public class Login : LoginBase
 
                 // Lobby ������ �̵�
                 Utils.LoadScene(SceneNames.Loby);
-			}
+
+				// userDB
+                BackendGameData.Instance.GameDataLoad(); // 데이터를 초기화 합니다
+
+                // 불러오려는 데이터가 존재하지 않을 경우, 데이터를 새로 추가합니다.
+                if (BackendGameData.Instance.UserGameData == null)
+                {
+                    BackendGameData.Instance.GameDataInsert();
+                }
+            }
 			// �α��� ����
 			else
 			{
