@@ -16,6 +16,8 @@ public class PanelManager : MonoBehaviour
 
     public void TogglePanel()
     {
-        panel.SetActive(!isPanel);
+        Debug.Log($"isPanel : {isPanel}");
+        isPanel = !isPanel;
+        panel.SetActive(isPanel);
     }
 }
