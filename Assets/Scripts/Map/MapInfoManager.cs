@@ -108,15 +108,15 @@ public class MapInfoManager : MonoBehaviour
                     objStageInfo.SetActive(true);
                     objNoInfo.SetActive(false);
 
-                    float correctness = Mathf.Floor(correct / 11 * 100);
+                    float correctness = Mathf.Floor(correct / 5f * 100f);
                     textCorrectness.text = "Correctness";
                     textStageInfo.text = $"{correctness}%";
                     // 별 UI 업데이트
-                    if (correctness == 100f)
+                    if (correctness > 0f)
                         spriteRenderer[0].sprite = yellowStar;
-                    else if (correctness >= 50f)
+                    if (correctness >= 50f)
                         spriteRenderer[1].sprite = yellowStar;
-                    else
+                    if (correctness == 100f)
                         spriteRenderer[2].sprite = yellowStar;
                 }
                 else
