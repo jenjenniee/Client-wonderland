@@ -37,7 +37,8 @@ public class BackendGameData
         Param param = new Param()
         {
             { "heart",      userGameData.heart },
-            { "equipHead",  userGameData.equipHead }
+            { "equipHead",  userGameData.equipHead },
+            { "hasItem",    userGameData.hasItem },
         };
 
         Backend.GameData.Insert("USER_DATA", param, callback =>
@@ -85,6 +86,7 @@ public class BackendGameData
                         // ���� ������ ������ ������ ����
                         userGameData.heart = int.Parse(gameDataJson[0]["heart"].ToString());
                         userGameData.equipHead = int.Parse(gameDataJson[0]["equipHead"].ToString());
+                        userGameData.hasItem = bool.Parse(gameDataJson[0]["hasItem"].ToString());
 
                         onGameDataLoadEvent?.Invoke();
                     }
@@ -161,5 +163,55 @@ public class BackendGameData
         bro = Backend.GameData.Update("GAME_MONEY", new Where(), param);
         */
         
+    }
+
+    public bool BuyItem(int index, int price)
+    {
+        // index는 아이템이 여러개일때 유효함.
+
+        if (userGameData.heart >= price)
+        {
+            DecreaseHeart(price);
+            userGameData.hasItem = true;
+            UpdateItem(); 
+            return true;
+        }
+        // 구매 실패 : 재화 부족
+        return false;
+    }
+
+    public void UpdateItem()
+    {
+        if (userGameData == null)
+        {
+            Debug.LogError("데이터가 존재하지 않습니다. Initialize 혹은 Get을 통해 데이터를 생성해주세요.");
+            return;
+        }
+
+        Param param = new Param()
+        {
+            { "hasItem", userGameData.hasItem }
+        };
+
+        if (string.IsNullOrEmpty(gameDataRowInDate))
+        {
+            Debug.LogError("유저의 inDate 정보가 없어 게임 정보 데이터 수정에 실패했습니다.");
+        }
+        else
+        {
+            Backend.GameData.UpdateV2("USER_DATA", gameDataRowInDate, Backend.UserInDate, param, callback =>
+            {
+                if (callback.IsSuccess())
+                {
+                    Debug.Log($"데이터 수정에 성공했습니다. : {callback}");
+                    //action?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError($"데이터 수정에 실패했습니다. : {callback}");
+                }
+            });
+        }
+
     }
 }

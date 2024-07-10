@@ -43,6 +43,11 @@ public class ProblemController : MonoBehaviour
     private TextMeshProUGUI[] textAnswer;
 
     [SerializeField]
+    private GameObject[] correctAnimator = new GameObject[4];
+    [SerializeField]
+    private GameObject[] wrongAnimator = new GameObject[4];
+
+    [SerializeField]
     private TextMeshProUGUI textProblemNumber;
     [SerializeField]
     private TextMeshProUGUI textProblem;
@@ -78,7 +83,7 @@ public class ProblemController : MonoBehaviour
         {
             animal.SetActive(false);
         }
-        setHeart();
+        SetHeart();
     }
 
     private void Update()
@@ -90,13 +95,13 @@ public class ProblemController : MonoBehaviour
         }
     }
 
-    private void setHeart() 
+    private void SetHeart() 
     {
         tmp.text = "" + BackendGameData.Instance.UserGameData.heart;
         Debug.Log($"userId: {UserInfo.Data.gamerId}");
     }
 
-    private void checkAnswer(string jsonResponse) 
+    private void CheckAnswer(string jsonResponse, int idx) 
     {
         QuestionResponseData responseData = JsonUtility.FromJson<QuestionResponseData>(jsonResponse);
         string response = responseData.message;
@@ -105,12 +110,13 @@ public class ProblemController : MonoBehaviour
         {
             Debug.Log("진입");
             BackendGameData.Instance.IncreaseHeart(50);
-            setHeart();
+            SetHeart();
+            correctAnimator[idx].SetActive(true);
         }
         else if (response == "오답 입니다")
         {
             BackendGameData.Instance.DecreaseHeart(50);
-            setHeart();
+            SetHeart();
         }
     }
     /// <summary>
@@ -132,7 +138,7 @@ public class ProblemController : MonoBehaviour
         string jsonData = JsonUtility.ToJson(data);
 
         // POST 요청 시작
-        StartCoroutine(PostRequest(postAnswerUrl, jsonData));
+        StartCoroutine(PostRequest(postAnswerUrl, jsonData, chosenNumber));
 
         // ���� �� �۾�
         for (int i = 0; i < 4; i++)
@@ -152,6 +158,7 @@ public class ProblemController : MonoBehaviour
         yield return new WaitForSecondsRealtime(3f);
         choiceButton[chosenNumber].alpha = 0f;
         animals[chosenNumber].SetActive(false);
+        correctAnimator[chosenNumber].SetActive(false);
 
         StartCoroutine(SetNewProblem(0f));
     }
@@ -269,7 +276,7 @@ public class ProblemController : MonoBehaviour
             }
         }
     }
-    IEnumerator PostRequest(string uri, string json)
+    IEnumerator PostRequest(string uri, string json, int idx)
     {
         var request = new UnityWebRequest(uri, "POST");
         byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(json);
@@ -288,7 +295,7 @@ public class ProblemController : MonoBehaviour
         else
         {
             string jsonResponse = request.downloadHandler.text;
-            checkAnswer(jsonResponse);
+            CheckAnswer(jsonResponse, idx);
         }
     }
 }
