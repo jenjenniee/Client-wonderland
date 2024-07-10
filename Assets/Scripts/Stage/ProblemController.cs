@@ -38,6 +38,8 @@ public class ProblemController : MonoBehaviour
     [SerializeField]
     private GameObject[] animals = new GameObject[4];       // �ش� ����
     [SerializeField]
+    private Sprite[] animalSprites = new Sprite[4];
+    [SerializeField]
     private TextMeshProUGUI[] textAnswer;
 
     [SerializeField]
@@ -46,6 +48,7 @@ public class ProblemController : MonoBehaviour
     private TextMeshProUGUI textProblem;
 
     private int problemNumber = 0;
+    private bool timeout = false;
 
     private TimerController timerController;
     [SerializeField]
@@ -78,6 +81,15 @@ public class ProblemController : MonoBehaviour
         setHeart();
     }
 
+    private void Update()
+    {
+        if (!timeout && timerController.integerTimer == 0)
+        {
+            timeout = true;
+            StartCoroutine(TimeOut());
+        }
+    }
+
     private void setHeart() 
     {
         tmp.text = "" + BackendGameData.Instance.UserGameData.heart;
@@ -104,7 +116,7 @@ public class ProblemController : MonoBehaviour
     /// ������ ������ ���� ���� �Լ�
     /// </summary>
     /// <param name="chosenNumber"></param>
-    public void Choice(int chosenNumber)
+    private void Choice(int chosenNumber)
     {
         timerController.onTimer = false;
         // ���� ���� ����
@@ -134,7 +146,7 @@ public class ProblemController : MonoBehaviour
         StartCoroutine(ChoiseAnimation(chosenNumber));
     }
 
-    public IEnumerator ChoiseAnimation(int chosenNumber)
+    private IEnumerator ChoiseAnimation(int chosenNumber)
     {
         yield return new WaitForSecondsRealtime(3f);
         choiceButton[chosenNumber].alpha = 0f;
@@ -143,7 +155,22 @@ public class ProblemController : MonoBehaviour
         StartCoroutine(SetNewProblem(0f));
     }
 
-    public IEnumerator SetNewProblem(float delayTime)
+    private IEnumerator TimeOut()
+    {
+        foreach (CanvasGroup btn in choiceButton)
+        {
+            btn.alpha = 0f;
+        }
+        yield return new WaitForSecondsRealtime(3f);
+        foreach (GameObject obj in animals)
+        {
+            obj.SetActive(false);
+        }
+
+        StartCoroutine(SetNewProblem(0f));
+    }
+
+    private IEnumerator SetNewProblem(float delayTime)
     {
         yield return new WaitForSecondsRealtime(delayTime);
 
@@ -178,16 +205,20 @@ public class ProblemController : MonoBehaviour
         }
     }
 
-    public IEnumerator StartProblem(float delayTime)
+    private IEnumerator StartProblem(float delayTime)
     {
         yield return new WaitForSecondsRealtime(delayTime);
         timerController.onTimer = true;
+        timeout = false;
     }
 
-    public IEnumerator AnimalAppear(float delayTime, GameObject obj)
+    private IEnumerator AnimalAppear(float delayTime, GameObject obj)
     {
         yield return new WaitForSecondsRealtime(delayTime);
+        int index = Random.Range(0, 4);
+        obj.GetComponent<SpriteRenderer>().sprite = animalSprites[index];
         obj.SetActive(true);
+        obj.GetComponent<Animator>().SetInteger("Index", index);
     }
 
     /// <summary>

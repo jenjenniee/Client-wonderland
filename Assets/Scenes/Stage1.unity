@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 136289890}
   - component: {fileID: 136289893}
   - component: {fileID: 136289894}
+  - component: {fileID: 136289895}
   m_Layer: 0
   m_Name: Cat (3)
   m_TagString: Untagged
@@ -258,6 +259,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToActive:
   - {fileID: 9188782876003106476}
+--- !u!114 &136289895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136289889}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833503a166ff86145a42a7e37149ee1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite:
+  - {fileID: 846187053, guid: 05caf6fcd55ff7f489205f61c1132fac, type: 3}
+  - {fileID: 344168632, guid: 335d8b29aec1b564f991584a5c8b9de4, type: 3}
+  - {fileID: 565402153, guid: 5a1385697df28234fa807cc48db31ef9, type: 3}
+  - {fileID: -65965626, guid: 2cb7d527dbc126b489c1318b01575eb7, type: 3}
+  newIdleAnimationClip:
+  - {fileID: 7400000, guid: c483a66eb379cba49bcfa24195931fb1, type: 2}
+  - {fileID: 7400000, guid: 41ce2c2ce2a23e64ba2c543f751ea141, type: 2}
+  - {fileID: 7400000, guid: 19857cd4184d7ec468e1cbeb1b05b573, type: 2}
+  - {fileID: 7400000, guid: fdc942c39386cc14e82eec614c733b54, type: 2}
 --- !u!1 &163964517
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +781,7 @@ GameObject:
   - component: {fileID: 354656828}
   - component: {fileID: 354656831}
   - component: {fileID: 354656832}
+  - component: {fileID: 354656833}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -880,6 +904,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToActive:
   - {fileID: 4461804516010105342}
+--- !u!114 &354656833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354656827}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833503a166ff86145a42a7e37149ee1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite:
+  - {fileID: 846187053, guid: 05caf6fcd55ff7f489205f61c1132fac, type: 3}
+  - {fileID: 344168632, guid: 335d8b29aec1b564f991584a5c8b9de4, type: 3}
+  - {fileID: 565402153, guid: 5a1385697df28234fa807cc48db31ef9, type: 3}
+  - {fileID: -65965626, guid: 2cb7d527dbc126b489c1318b01575eb7, type: 3}
+  newIdleAnimationClip:
+  - {fileID: 7400000, guid: c483a66eb379cba49bcfa24195931fb1, type: 2}
+  - {fileID: 7400000, guid: 41ce2c2ce2a23e64ba2c543f751ea141, type: 2}
+  - {fileID: 7400000, guid: 19857cd4184d7ec468e1cbeb1b05b573, type: 2}
+  - {fileID: 7400000, guid: fdc942c39386cc14e82eec614c733b54, type: 2}
 --- !u!1 &416058008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1616,7 @@ GameObject:
   - component: {fileID: 824537932}
   - component: {fileID: 824537935}
   - component: {fileID: 824537936}
+  - component: {fileID: 824537937}
   m_Layer: 0
   m_Name: Cat (1)
   m_TagString: Untagged
@@ -1692,6 +1739,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToActive:
   - {fileID: 9188782875951763412}
+--- !u!114 &824537937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824537931}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833503a166ff86145a42a7e37149ee1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite:
+  - {fileID: 846187053, guid: 05caf6fcd55ff7f489205f61c1132fac, type: 3}
+  - {fileID: 344168632, guid: 335d8b29aec1b564f991584a5c8b9de4, type: 3}
+  - {fileID: 565402153, guid: 5a1385697df28234fa807cc48db31ef9, type: 3}
+  - {fileID: -65965626, guid: 2cb7d527dbc126b489c1318b01575eb7, type: 3}
+  newIdleAnimationClip:
+  - {fileID: 7400000, guid: c483a66eb379cba49bcfa24195931fb1, type: 2}
+  - {fileID: 7400000, guid: 41ce2c2ce2a23e64ba2c543f751ea141, type: 2}
+  - {fileID: 7400000, guid: 19857cd4184d7ec468e1cbeb1b05b573, type: 2}
+  - {fileID: 7400000, guid: fdc942c39386cc14e82eec614c733b54, type: 2}
 --- !u!1 &826178423
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,6 +3252,7 @@ MonoBehaviour:
   timer: {fileID: 1736021191}
   duration: 20
   text: {fileID: 1174471163}
+  integerTimer: 20
 --- !u!1 &1986104167
 GameObject:
   m_ObjectHideFlags: 0
@@ -3424,6 +3494,11 @@ MonoBehaviour:
   - {fileID: 824537931}
   - {fileID: 2100718351}
   - {fileID: 136289889}
+  animalSprites:
+  - {fileID: 846187053, guid: 05caf6fcd55ff7f489205f61c1132fac, type: 3}
+  - {fileID: 344168632, guid: 335d8b29aec1b564f991584a5c8b9de4, type: 3}
+  - {fileID: 565402153, guid: 5a1385697df28234fa807cc48db31ef9, type: 3}
+  - {fileID: -65965626, guid: 2cb7d527dbc126b489c1318b01575eb7, type: 3}
   textAnswer:
   - {fileID: 3571490407775458611}
   - {fileID: 4951519786605051852}
@@ -3463,6 +3538,7 @@ GameObject:
   - component: {fileID: 2100718357}
   - component: {fileID: 2100718352}
   - component: {fileID: 2100718356}
+  - component: {fileID: 2100718358}
   m_Layer: 0
   m_Name: Cat (2)
   m_TagString: Untagged
@@ -3585,6 +3661,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xPosition: 1.7
+--- !u!114 &2100718358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100718351}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833503a166ff86145a42a7e37149ee1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite:
+  - {fileID: 846187053, guid: 05caf6fcd55ff7f489205f61c1132fac, type: 3}
+  - {fileID: 344168632, guid: 335d8b29aec1b564f991584a5c8b9de4, type: 3}
+  - {fileID: 565402153, guid: 5a1385697df28234fa807cc48db31ef9, type: 3}
+  - {fileID: -65965626, guid: 2cb7d527dbc126b489c1318b01575eb7, type: 3}
+  newIdleAnimationClip:
+  - {fileID: 7400000, guid: c483a66eb379cba49bcfa24195931fb1, type: 2}
+  - {fileID: 7400000, guid: 41ce2c2ce2a23e64ba2c543f751ea141, type: 2}
+  - {fileID: 7400000, guid: 19857cd4184d7ec468e1cbeb1b05b573, type: 2}
+  - {fileID: 7400000, guid: fdc942c39386cc14e82eec614c733b54, type: 2}
 --- !u!1 &606199820934928807
 GameObject:
   m_ObjectHideFlags: 0

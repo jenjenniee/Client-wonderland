@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TimerController : MonoBehaviour
@@ -10,6 +11,8 @@ public class TimerController : MonoBehaviour
     public GameObject timer;        // "Gauge Front" : 타이머 바
     public float duration;          // 타이머 시간
     public TextMeshProUGUI text;    // 남은 시간 출력하는 텍스트
+
+    public int integerTimer = 20;
 
     private float elapsedTime;      // 경과시간
     private Vector3 initialScale;   // 초기 타이머 바 가로 길이 저장용
@@ -36,6 +39,7 @@ public class TimerController : MonoBehaviour
                 float newWidth = Mathf.Lerp(initialScale.x, 0, elapsedTime / duration);
                 timer.transform.localScale = new Vector3(newWidth, initialScale.y, initialScale.z);
                 text.text = $"{Mathf.Ceil(duration - elapsedTime)}초";
+                integerTimer = (int)Mathf.Ceil(duration - elapsedTime);
             }
         }
     }
