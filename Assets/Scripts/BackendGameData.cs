@@ -1,6 +1,6 @@
 using UnityEngine;
 using BackEnd;
-
+using TMPro;
 public class BackendGameData
 {
     [System.Serializable]
@@ -100,19 +100,19 @@ public class BackendGameData
         });
     }
 
-    public void IncreaseHeart()
+    public void IncreaseHeart(int num)
     {
         // heart 추가하기
-
         Debug.Log("heart를 1 증가시킵니다.");
-        userGameData.heart += 1;
+        userGameData.heart += num;
     }
-    public void DecreaseHeart()
+    public void DecreaseHeart(int num)
     {
         // heart 추가하기
 
         Debug.Log("heart를 1 증가시킵니다.");
-        userGameData.heart -= 1;
+        if(userGameData.heart >= num)
+            userGameData.heart -= num;
     }
 
     public void UpdateGameMoney()
