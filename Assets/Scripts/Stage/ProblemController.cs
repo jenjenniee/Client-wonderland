@@ -117,6 +117,7 @@ public class ProblemController : MonoBehaviour
         {
             BackendGameData.Instance.DecreaseHeart(50);
             SetHeart();
+            wrongAnimator[idx].SetActive(true);
         }
     }
     /// <summary>
@@ -159,6 +160,7 @@ public class ProblemController : MonoBehaviour
         choiceButton[chosenNumber].alpha = 0f;
         animals[chosenNumber].SetActive(false);
         correctAnimator[chosenNumber].SetActive(false);
+        wrongAnimator[chosenNumber].SetActive(false);
 
         StartCoroutine(SetNewProblem(0f));
     }
