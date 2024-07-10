@@ -1,6 +1,8 @@
 using UnityEngine;
 using BackEnd;
 using TMPro;
+using System;
+using UnityEngine.Events;
 public class BackendGameData
 {
     [System.Serializable]
@@ -105,14 +107,17 @@ public class BackendGameData
         // heart 추가하기
         Debug.Log("heart를 1 증가시킵니다.");
         userGameData.heart += num;
+        UpdateGameMoney();
     }
     public void DecreaseHeart(int num)
     {
         // heart 추가하기
 
         Debug.Log("heart를 1 증가시킵니다.");
-        if(userGameData.heart >= num)
-            userGameData.heart -= num;
+        //if(userGameData.heart >= num)
+        //    userGameData.heart -= num;
+        userGameData.heart = Mathf.Max(userGameData.heart - num, 0);
+        UpdateGameMoney();
     }
 
     public void UpdateGameMoney()
@@ -125,21 +130,36 @@ public class BackendGameData
             return;
         }
 
-        Param param = new Param();
-        param.Add("heart", userGameData.heart);
+        Param param = new Param()
+        {
+            { "heart", userGameData.heart }
+        };
 
+        if (string.IsNullOrEmpty(gameDataRowInDate))
+        {
+            Debug.LogError("유저의 inDate 정보가 없어 게임 정보 데이터 수정에 실패했습니다.");
+        }
+        else
+        {
+            Backend.GameData.UpdateV2("USER_DATA", gameDataRowInDate, Backend.UserInDate, param, callback =>
+            {
+                if (callback.IsSuccess())
+                {
+                    Debug.Log($"데이터 수정에 성공했습니다. : {callback}");
+                    //action?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError($"데이터 수정에 실패했습니다. : {callback}");
+                }
+            });
+        }
+        /*
         BackendReturnObject bro = null;
 
         Debug.Log("나의 데이터를 수정합니다");
         bro = Backend.GameData.Update("GAME_MONEY", new Where(), param);
-
-        if (bro.IsSuccess())
-        {
-            Debug.Log("데이터 수정에 성공했습니다. : " + bro);
-        }
-        else
-        {
-            Debug.LogError("데이터 수정에 실패했습니다. : " + bro);
-        }
+        */
+        
     }
 }

@@ -27,6 +27,8 @@ public class RegisterAccount : LoginBase
 
 	[SerializeField]
 	private GameObject registerAccountUI;
+	[SerializeField]
+	private GameObject loginUI;
 
 	/// <summary>
 	/// "회원 가입" 버튼을 눌렀을 때 호출
@@ -96,6 +98,9 @@ public class RegisterAccount : LoginBase
 						
 						// 유저 테이블에 새로운 유저 정보 추가
 						BackendGameData.Instance.GameDataInsert();
+
+						registerAccountUI.SetActive(false);
+						loginUI.SetActive(true);
 
 						// ��� ��Ʈ ������ �ҷ�����
 						//BackendChartData.LoadAllChart();

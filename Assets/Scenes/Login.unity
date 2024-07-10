@@ -729,6 +729,7 @@ MonoBehaviour:
   inputFieldEmail: {fileID: 1298454080}
   btnRegisterAccount: {fileID: 1138212151}
   registerAccountUI: {fileID: 686382690}
+  loginUI: {fileID: 4414123104135625945}
 --- !u!1 &741402597
 GameObject:
   m_ObjectHideFlags: 0

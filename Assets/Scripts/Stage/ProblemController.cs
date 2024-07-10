@@ -93,6 +93,7 @@ public class ProblemController : MonoBehaviour
     private void setHeart() 
     {
         tmp.text = "" + BackendGameData.Instance.UserGameData.heart;
+        Debug.Log($"userId: {UserInfo.Data.gamerId}");
     }
 
     private void checkAnswer(string jsonResponse) 

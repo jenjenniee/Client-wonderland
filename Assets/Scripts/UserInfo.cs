@@ -24,12 +24,12 @@ public class UserInfo : MonoBehaviour
                     JsonData json = callback.GetReturnValuetoJSON()["row"];
 
                     data.gamerId = json["gamerId"].ToString();
-                    data.countryCode = json["countryCode"].ToString();
-                    data.nickname = json["nickname"].ToString();
-                    data.inDate = json["inDate"].ToString();
-                    data.emailForFindPassword = json["emailForFindPassword"].ToString();
-                    data.subscriptionType = json["subscriptionType"].ToString();
-                    data.federationId = json["federationId"].ToString();
+                    data.countryCode = json["countryCode"]?.ToString();
+                    data.nickname = json["nickname"]?.ToString();
+                    data.inDate = json["inDate"]?.ToString();
+                    data.emailForFindPassword = json["emailForFindPassword"]?.ToString();
+                    data.subscriptionType = json["subscriptionType"]?.ToString();
+                    data.federationId = json["federationId"]?.ToString();
                 }
                 catch (System.Exception e)
                 {
