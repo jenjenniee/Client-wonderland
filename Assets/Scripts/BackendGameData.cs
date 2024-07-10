@@ -214,4 +214,54 @@ public class BackendGameData
         }
 
     }
+
+
+    public void EquipItem(int index)
+    {
+        // index는 아이템이 여러개일때 유효함.
+        userGameData.equipHead = index;
+        UpdateEquipment();
+    }
+
+    public void UnequipItem()
+    {
+        // index는 아이템이 여러개일때 유효함.
+        userGameData.equipHead = 0;
+        UpdateEquipment();
+    }
+
+    public void UpdateEquipment()
+    {
+        if (userGameData == null)
+        {
+            Debug.LogError("데이터가 존재하지 않습니다. Initialize 혹은 Get을 통해 데이터를 생성해주세요.");
+            return;
+        }
+
+        Param param = new Param()
+        {
+            { "equipHead", userGameData.equipHead }
+        };
+
+        if (string.IsNullOrEmpty(gameDataRowInDate))
+        {
+            Debug.LogError("유저의 inDate 정보가 없어 게임 정보 데이터 수정에 실패했습니다.");
+        }
+        else
+        {
+            Backend.GameData.UpdateV2("USER_DATA", gameDataRowInDate, Backend.UserInDate, param, callback =>
+            {
+                if (callback.IsSuccess())
+                {
+                    Debug.Log($"데이터 수정에 성공했습니다. : {callback}");
+                    //action?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError($"데이터 수정에 실패했습니다. : {callback}");
+                }
+            });
+        }
+
+    }
 }

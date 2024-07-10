@@ -38,7 +38,7 @@ public class TimerController : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 float newWidth = Mathf.Lerp(initialScale.x, 0, elapsedTime / duration);
                 timer.transform.localScale = new Vector3(newWidth, initialScale.y, initialScale.z);
-                text.text = $"{Mathf.Ceil(duration - elapsedTime)}√ ";
+                text.text = $"{Mathf.Ceil(duration - elapsedTime)} sec";
                 integerTimer = (int)Mathf.Ceil(duration - elapsedTime);
             }
         }
@@ -52,7 +52,7 @@ public class TimerController : MonoBehaviour
         this.duration = duration;
         elapsedTime = 0f;
         timer.transform.localScale = initialScale;
-        text.text = $"{Mathf.Ceil(duration - elapsedTime)}√ ";
+        text.text = $"{Mathf.Ceil(duration - elapsedTime)} sec";
         onTimer = true;
     }
 }

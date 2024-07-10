@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class StageData
@@ -25,7 +26,6 @@ public class StageResponseData
 
 public class MapInfoManager : MonoBehaviour
 {
-    [SerializeField]
     private string userId;
     [SerializeField]
     private string theme;
@@ -48,7 +48,7 @@ public class MapInfoManager : MonoBehaviour
 
     // 별과 관련된 변수들
     [SerializeField]
-    private SpriteRenderer[] spriteRenderer = new SpriteRenderer[3];
+    private Image[] spriteRenderer = new Image[3];
     [SerializeField]
     private Sprite yellowStar;
 
@@ -57,6 +57,7 @@ public class MapInfoManager : MonoBehaviour
 
     void Start()
     {
+        userId = UserInfo.Data.gamerId;
         url = $"https://worderland.kro.kr/api/result/{userId}?theme={theme}";
         StartCoroutine(GetRequest(url));
     }
@@ -71,6 +72,10 @@ public class MapInfoManager : MonoBehaviour
             // 오류 처리
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
+                objCorrectness.SetActive(false);
+                objStageInfo.SetActive(false);
+                objNoInfo.SetActive(true);
+                textNoInfo.text = "No record";
                 Debug.LogError(request.error);
             }
             else
@@ -85,49 +90,41 @@ public class MapInfoManager : MonoBehaviour
                 // 데이터 접근
                 if (responseData.success)
                 {
-                    if (responseData.data == null)
+                    stageData = responseData.data.Clone() as StageData[];
+                    foreach (var userData in responseData.data)
                     {
-                        // 빈 배열이면 유저 정보 없는 것
-                        // 따라서 "기록 없음"으로 출력
-                        objCorrectness.SetActive(false);
-                        objStageInfo.SetActive(false);
-                        objNoInfo.SetActive(true);
-                        textNoInfo.text = "기록 없음";
+                        Debug.Log("User ID: " + userData.userId);
+                        Debug.Log("Theme: " + userData.theme);
+                        Debug.Log("Stage: " + userData.stage);
+                        Debug.Log("Correct Answers: " + userData.correctAnswers);
                     }
-                    else
+                    int correct = 0;
+                    for(int i = 0; i < stageData.Length - 1; i++)
                     {
-                        stageData = responseData.data.Clone() as StageData[];
-                        foreach (var userData in responseData.data)
-                        {
-                            Debug.Log("User ID: " + userData.userId);
-                            Debug.Log("Theme: " + userData.theme);
-                            Debug.Log("Stage: " + userData.stage);
-                            Debug.Log("Correct Answers: " + userData.correctAnswers);
-                        }
-                        int correct = 0;
-                        for(int i = 0; i < stageData.Length - 1; i++)
-                        {
-                            correct += stageData[i].correctAnswers;
-                        }
-                        // UI 업데이트
-                        objCorrectness.SetActive(true);
-                        objStageInfo.SetActive(true);
-                        objNoInfo.SetActive(false);
+                        correct += stageData[i].correctAnswers;
+                    }
+                    // UI 업데이트
+                    objCorrectness.SetActive(true);
+                    objStageInfo.SetActive(true);
+                    objNoInfo.SetActive(false);
 
-                        float correctness = Mathf.Floor(correct / 11 * 100);
-                        textCorrectness.text = "정답률";
-                        textStageInfo.text = $"{correctness}%";
-                        // 별 UI 업데이트
-                        if (correctness > 0f)
-                            spriteRenderer[0].sprite = yellowStar;
-                        if (correctness > 50f)
-                            spriteRenderer[1].sprite = yellowStar;
-                        if (correct == 11)
-                            spriteRenderer[2].sprite = yellowStar;
-                    }
+                    float correctness = Mathf.Floor(correct / 11 * 100);
+                    textCorrectness.text = "Correctness";
+                    textStageInfo.text = $"{correctness}%";
+                    // 별 UI 업데이트
+                    if (correctness == 100f)
+                        spriteRenderer[0].sprite = yellowStar;
+                    else if (correctness >= 50f)
+                        spriteRenderer[1].sprite = yellowStar;
+                    else
+                        spriteRenderer[2].sprite = yellowStar;
                 }
                 else
                 {
+                    objCorrectness.SetActive(false);
+                    objStageInfo.SetActive(false);
+                    objNoInfo.SetActive(true);
+                    textNoInfo.text = "No record";
                     Debug.LogError("Request failed with message: " + responseData.message);
                 }
             }

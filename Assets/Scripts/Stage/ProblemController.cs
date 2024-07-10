@@ -48,6 +48,9 @@ public class ProblemController : MonoBehaviour
     private GameObject[] wrongAnimator = new GameObject[4];
 
     [SerializeField]
+    private GameObject heartMove;
+
+    [SerializeField]
     private TextMeshProUGUI textProblemNumber;
     [SerializeField]
     private TextMeshProUGUI textProblem;
@@ -109,9 +112,9 @@ public class ProblemController : MonoBehaviour
         if (response == "정답 입니다")
         {
             Debug.Log("진입");
-            BackendGameData.Instance.IncreaseHeart(50);
-            SetHeart();
+            StartCoroutine(AfterHeartMove());
             correctAnimator[idx].SetActive(true);
+            heartMove.SetActive(true);
         }
         else if (response == "오답 입니다")
         {
@@ -119,6 +122,12 @@ public class ProblemController : MonoBehaviour
             SetHeart();
             wrongAnimator[idx].SetActive(true);
         }
+    }
+    private IEnumerator AfterHeartMove()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        BackendGameData.Instance.IncreaseHeart(50);
+        SetHeart();
     }
     /// <summary>
     /// ������ ������ ���� ���� �Լ�
@@ -131,7 +140,7 @@ public class ProblemController : MonoBehaviour
         AnswerData data = new AnswerData
         {
             questionId = problemData[problemNumber - 1].questionId,
-            userId = "user123",
+            userId = UserInfo.Data.gamerId,
             answer = textAnswer[chosenNumber].text,
         };
 
@@ -186,18 +195,19 @@ public class ProblemController : MonoBehaviour
 
         timerController.NewProblemTimer(20f);
         timerController.onTimer = false;
+        heartMove.SetActive(false);
 
         // ���� ��ȣ ����
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 11)
+        if (problemNumber == 6)
         {
             sentenceStageManager.NextStage();
         }
         else
         {
-            textProblemNumber.text = $"문제{problemNumber}.";
+            textProblemNumber.text = $"Q{problemNumber}.";
             string[] words = problemData[problemNumber - 1].content.Split(',');
 
             // set problem's answers
