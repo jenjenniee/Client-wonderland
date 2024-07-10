@@ -201,7 +201,7 @@ public class ProblemController : MonoBehaviour
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 6)
+        if (problemNumber == 1)
         {
             sentenceStageManager.NextStage();
         }
