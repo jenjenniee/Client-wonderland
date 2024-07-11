@@ -32,8 +32,21 @@ public class CharacterSprite : MonoBehaviour
     {
         GetComponent<Image>().sprite = equipSprite;
     }
+    public void ToggleItemEquipment()
+    {
+        if (BackendGameData.Instance.UserGameData.equipHead == 0)
+        {
+            BackendGameData.Instance.EquipItem(1);
+        }
+        else
+        {
+            BackendGameData.Instance.UnequipItem();
+        }
+        UpdateCharacterSprite();
+    }
     public void UnequipItem()
     {
         GetComponent<Image>().sprite = unequipSprite;
     }
+
 }

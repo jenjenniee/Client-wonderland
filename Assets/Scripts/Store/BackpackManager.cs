@@ -12,6 +12,11 @@ public class BackpackManager : MonoBehaviour
 
     void Start()
     {
+        UpdateState();
+    }
+
+    public void UpdateState()
+    {
         if (BackendGameData.Instance.UserGameData.equipHead == 0)
         {
             equipText.text = "";
@@ -22,14 +27,5 @@ public class BackpackManager : MonoBehaviour
             equipText.text = "equipped";
             equipButtonText.text = "UNEQUIP";
         }
-    }
-
-    public void OnEquip(int idx)
-    {
-        if (BackendGameData.Instance.UserGameData.equipHead == 0)
-            BackendGameData.Instance.EquipItem(idx);
-        else
-            BackendGameData.Instance.UnequipItem();
-        clickedUI.SetActive(false);
     }
 }
