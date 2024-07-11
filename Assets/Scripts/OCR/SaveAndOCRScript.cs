@@ -84,6 +84,13 @@ public class SaveAndOCRScript : MonoBehaviour
             }
 
             Debug.Log("Extracted Text: " + text);
+            GameObject.Find("ProblemController").GetComponent<ProblemController>().OnSubmitOCR(text);
+            StartCoroutine(ClearAfterSubmit());
         }
+    }
+    IEnumerator ClearAfterSubmit()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        GameObject.Find("OCRPanel").GetComponent<DrawScript>().InitializeTexture();
     }
 }

@@ -54,6 +54,8 @@ public class ProblemController : MonoBehaviour
     private TextMeshProUGUI textProblemNumber;
     [SerializeField]
     private TextMeshProUGUI textProblem;
+    [SerializeField]
+    private TextMeshProUGUI textFollowingWord;
 
     private int problemNumber = 0;
     private bool timeout = false;
@@ -63,19 +65,19 @@ public class ProblemController : MonoBehaviour
     private SentenceStageManager sentenceStageManager;
     //private bool solvingProblem = false;
 
-    [SerializeField]
-    private string stage;
-
     private string getProblemUrl;           // server url
     private string postAnswerUrl;
-    QuestionData[] problemData;             // problem data from server. 10 problems get into this variable.
+    QuestionData[][] problemData = new QuestionData[2][];             // problem data from server. 10 problems get into this variable.
     public TextMeshProUGUI tmp;
+    public GameObject ocrPanel;
 
     private void Start()
     {
-        getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage={stage}";
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
-        StartCoroutine(GetRequest(getProblemUrl));
+        getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=1";
+        StartCoroutine(GetRequest(getProblemUrl, 1));
+        getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=2";
+        StartCoroutine(GetRequest(getProblemUrl, 2));
 
         timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
         timerController.onTimer = false;
@@ -85,6 +87,7 @@ public class ProblemController : MonoBehaviour
             animal.SetActive(false);
         }
         SetHeart();
+        StartCoroutine(SetNewProblem(5f));
     }
 
     private void Update()
@@ -116,10 +119,11 @@ public class ProblemController : MonoBehaviour
         }
         else if (response == "오답 입니다")
         {
-            BackendGameData.Instance.DecreaseHeart(50);
-            SetHeart();
+            //BackendGameData.Instance.DecreaseHeart(50);
+            //SetHeart();
             wrongAnimator[idx].SetActive(true);
         }
+        StartCoroutine(ChoiseAnimation(idx));
     }
     private IEnumerator AfterHeartMove()
     {
@@ -137,7 +141,7 @@ public class ProblemController : MonoBehaviour
         // ���� ���� ����
         AnswerData data = new AnswerData
         {
-            questionId = problemData[problemNumber - 1].questionId,
+            questionId = problemData[0][problemNumber - 1].questionId,
             userId = UserInfo.Data.gamerId,
             answer = textAnswer[chosenNumber].text,
         };
@@ -158,16 +162,44 @@ public class ProblemController : MonoBehaviour
             }
         }
         // ���� �� ��ü�� 3�� ���� �������� �˷��ִ� �ִϸ��̼�
-        StartCoroutine(ChoiseAnimation(chosenNumber));
+        //StartCoroutine(ChoiseAnimation(chosenNumber));
     }
+
+
+    public void OnSubmitOCR(string textOCR)
+    {
+        timerController.onTimer = false;
+        // ���� ���� ����
+        AnswerData data = new AnswerData
+        {
+            questionId = problemData[1][problemNumber - 1].questionId,
+            userId = UserInfo.Data.gamerId,
+            answer = textOCR,
+        };
+
+        Debug.Log($"questionID: {problemData[1][problemNumber - 1].questionId}, textOCR: {textOCR}, answer: {problemData[1][problemNumber - 1].content}");
+
+        // JSON 문자열로 변환
+        string jsonData = JsonUtility.ToJson(data);
+
+        // POST 요청 시작
+        StartCoroutine(PostRequest(postAnswerUrl, jsonData, 4));
+        //StartCoroutine(SetNewProblem(3f));
+    }
+
 
     private IEnumerator ChoiseAnimation(int chosenNumber)
     {
         yield return new WaitForSecondsRealtime(3f);
-        choiceButton[chosenNumber].alpha = 0f;
-        animals[chosenNumber].SetActive(false);
+        if (chosenNumber < 4)
+        {
+            choiceButton[chosenNumber].alpha = 0f;
+            animals[chosenNumber].SetActive(false);
+        }
         correctAnimator[chosenNumber].SetActive(false);
         wrongAnimator[chosenNumber].SetActive(false);
+        ocrPanel.SetActive(false);
+        textFollowingWord.text = "";
 
         StartCoroutine(SetNewProblem(0f));
     }
@@ -183,6 +215,8 @@ public class ProblemController : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        ocrPanel.SetActive(false);
+        textFollowingWord.text = "";
 
         StartCoroutine(SetNewProblem(0f));
     }
@@ -206,20 +240,34 @@ public class ProblemController : MonoBehaviour
         else
         {
             textProblemNumber.text = $"Q{problemNumber}.";
-            string[] words = problemData[problemNumber - 1].content.Split(',');
-
-            // set problem's answers
-            for (int i = 0; i < 4; i++)
+            int problemStyle = Random.Range(0, 2);
+            if (problemStyle == 0)
             {
-                textAnswer[i].text = words[i];
-            }
+                // 선택형
+                textProblem.text = "Select the correct word.";
+                string[] words = problemData[0][problemNumber - 1].content.Split(',');
 
-            //Debug.Log("A New Problem Set.");
-            for (int i = 0; i < 4; i++)
-            {
-                StartCoroutine(AnimalAppear(Random.Range(0f, 1f), animals[i]));
+                // set problem's answers
+                for (int i = 0; i < 4; i++)
+                {
+                    textAnswer[i].text = words[i];
+                }
+
+                //Debug.Log("A New Problem Set.");
+                for (int i = 0; i < 4; i++)
+                {
+                    StartCoroutine(AnimalAppear(Random.Range(0f, 1f), animals[i]));
+                }
+                StartCoroutine(StartProblem(3f));
             }
-            StartCoroutine(StartProblem(3f));
+            else
+            {
+                // 주관식
+                textProblem.text = $"Correct the following word:";
+                textFollowingWord.text = $"{problemData[1][problemNumber - 1].content}ed";
+                ocrPanel.SetActive(true);
+                StartCoroutine(StartProblem(2f));
+            }
         }
     }
 
@@ -244,7 +292,7 @@ public class ProblemController : MonoBehaviour
     /// </summary>
     /// <param name="uri"></param>
     /// <returns></returns>
-    IEnumerator GetRequest(string uri)
+    IEnumerator GetRequest(string uri, int stage)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(uri))
         {
@@ -268,16 +316,18 @@ public class ProblemController : MonoBehaviour
                 // 데이터 접근
                 if (responseData.success)
                 {
-                    problemData = responseData.data.Clone() as QuestionData[];
+                    problemData[stage - 1] = responseData.data.Clone() as QuestionData[];
                     // 잘 복사 됐는지 보는 로고
-                    foreach (QuestionData questionData in problemData)
+                    /*
+                    foreach (QuestionData questionData in problemData[0])
                     {
                         int questionId = questionData.questionId;
                         string content = questionData.content;
                         //Debug.Log("Question ID: " + questionId);
                         //Debug.Log("Content: " + content);
                     }
-                    StartCoroutine(SetNewProblem(5f));
+                    */
+                    Debug.Log($"Response: {problemData[stage - 1]}");
                 }
                 else
                 {
