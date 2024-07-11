@@ -67,8 +67,8 @@ public class BackendGameData
         {
             if (callback.IsSuccess())
             {
-                Debug.Log($"���� ���� �ҷ����� ����: {callback}");
-                Debug.Log("랄랼랄");
+                //Debug.Log($"���� ���� �ҷ����� ����: {callback}");
+                //Debug.Log("랄랼랄");
 
                 // JSON �Ľ�
                 try
@@ -77,7 +77,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("�����Ͱ� �������� �ʽ��ϴ�.");
+                        //Debug.Log("�����Ͱ� �������� �ʽ��ϴ�.");
                     }
                     else
                     {
@@ -89,6 +89,7 @@ public class BackendGameData
                         userGameData.hasItem = bool.Parse(gameDataJson[0]["hasItem"].ToString());
 
                         onGameDataLoadEvent?.Invoke();
+                        Utils.LoadScene(SceneNames.Loby);
                     }
                 }
                 catch (System.Exception e)

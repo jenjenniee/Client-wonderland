@@ -20,6 +20,9 @@ public class Login : LoginBase
 
 	[SerializeField]
 	private GameObject loginUI;
+
+	[SerializeField]
+	private UserInfo userInfo;
 	
 	/// <summary>
 	/// 회원가입에서 로그인으로 넘어올 때 호출
@@ -67,17 +70,18 @@ public class Login : LoginBase
 			// 로그인 성공
 			if ( callback.IsSuccess() )
 			{
-				SetMessage($"{inputFieldID.text}님 환영합니다.");
+				SetMessage($"Welcome, {inputFieldID.text}!");
 
                 // ��� ��Ʈ ������ �ҷ�����
                 //BackendChartData.LoadAllChart();
 
-
-                // Lobby ������ �̵�
-                Utils.LoadScene(SceneNames.Loby);
-
 				// userDB
                 BackendGameData.Instance.GameDataLoad(); // 데이터를 초기화 합니다
+                userInfo.GetUserInfoFromBackend();
+
+                // Lobby ������ �̵�
+                //Utils.LoadScene(SceneNames.Loby);
+
 
                 // 불러오려는 데이터가 존재하지 않을 경우, 데이터를 새로 추가합니다.
                 if (BackendGameData.Instance.UserGameData == null)

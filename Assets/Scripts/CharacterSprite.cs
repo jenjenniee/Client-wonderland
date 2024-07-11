@@ -30,7 +30,8 @@ public class CharacterSprite : MonoBehaviour
 
     public void EquipItemTemporary()
     {
-        GetComponent<Image>().sprite = equipSprite;
+        if (!BackendGameData.Instance.UserGameData.hasItem)
+            GetComponent<Image>().sprite = equipSprite;
     }
     public void ToggleItemEquipment()
     {

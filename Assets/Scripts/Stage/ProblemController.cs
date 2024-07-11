@@ -199,7 +199,7 @@ public class ProblemController : MonoBehaviour
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 1)
+        if (problemNumber == 6)
         {
             sentenceStageManager.NextStage();
         }
@@ -274,8 +274,8 @@ public class ProblemController : MonoBehaviour
                     {
                         int questionId = questionData.questionId;
                         string content = questionData.content;
-                        Debug.Log("Question ID: " + questionId);
-                        Debug.Log("Content: " + content);
+                        //Debug.Log("Question ID: " + questionId);
+                        //Debug.Log("Content: " + content);
                     }
                     StartCoroutine(SetNewProblem(5f));
                 }

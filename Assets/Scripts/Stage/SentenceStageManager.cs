@@ -45,6 +45,9 @@ public class SentenceStageManager : MonoBehaviour
     private float maxHeightInRow = 0f;
 
     private TextMeshProUGUI selectedText;
+    [SerializeField] private TextMeshProUGUI selectedWord; // 화면에 보여지는 텍스트
+    [SerializeField] private GameObject correct;
+    [SerializeField] private GameObject wrong;
 
     private QuestionData problemData;
 
@@ -98,7 +101,7 @@ public class SentenceStageManager : MonoBehaviour
         {
             maxHeightInRow = preferredHeight;
         }
-        Debug.Log($"Current X: {currentX}, Current Y: {currentY}");
+        //Debug.Log($"Current X: {currentX}, Current Y: {currentY}");
 
         Button button = tmpObject.AddComponent<Button>();
         // TextWordHighlighter 추가
@@ -113,13 +116,37 @@ public class SentenceStageManager : MonoBehaviour
         {
             selectedText.color = word.color;
         }
-        word.color = Color.red;
-        selectedText = word;
         Debug.Log($"Clicked on word: {word.text}");
         if (word.text == splittedSentence[2])
         {
             Debug.Log("Correct word is selected.");
         }
+        word.color = Color.red;
+        selectedText = word; 
+        selectedWord.text = word.text;
+    }
+
+    public void SubmitSelection()
+    {
+        if (selectedWord.text == splittedSentence[2])
+        {
+            //correct.
+            selectedWord.text = splittedSentence[1];
+            BackendGameData.Instance.IncreaseHeart(50);
+            correct.SetActive(true);
+        }
+        else
+        {
+            //wrong.
+            wrong.SetActive(true);
+        }
+        StartCoroutine(BackToMap());
+    }
+
+    IEnumerator BackToMap()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        Utils.LoadScene("Map");
     }
 
     private IEnumerator FadeOutCanvasGroup(CanvasGroup canvasGroup, Renderer blackBoxRenderer, float duration)
@@ -206,18 +233,28 @@ public class SentenceStageManager : MonoBehaviour
                 {
                     problemData = responseData.data;
                     splittedSentence = problemData.content.Split('+');
-                    sentence.text = splittedSentence[0];
+                    sentence.text = "";
 
                     foreach (string word in splittedSentence[0].Split(' '))
                     {
+                        if (word == splittedSentence[2])
+                        {
+                            sentence.text += splittedSentence[1] + " ";
+                        }
+                        else
+                        {
+                            sentence.text += word + " ";
+                        }
                         CreateWord(word);
                     } 
 
                     // 잘 복사 됐는지 보는 로고
+                    /*
                     int questionId = problemData.questionId;
                     string content = problemData.content;
                     Debug.Log("Question ID: " + questionId);
                     Debug.Log("Content: " + content);
+                    */
                 }
                 else
                 {

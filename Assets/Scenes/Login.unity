@@ -3479,6 +3479,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8173121162883128828, guid: 38699232817be4eb78e6408d5b780a8b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4414123104135625946}
+    - targetCorrespondingSourceObject: {fileID: 8173121162883128828, guid: 38699232817be4eb78e6408d5b780a8b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4414123104135625947}
   m_SourcePrefab: {fileID: 100100000, guid: 38699232817be4eb78e6408d5b780a8b, type: 3}
 --- !u!114 &4414123104135625943 stripped
 MonoBehaviour:
@@ -3526,6 +3529,22 @@ MonoBehaviour:
   inputFieldPW: {fileID: 1139828506}
   btnLogin: {fileID: 3889112615660004958}
   loginUI: {fileID: 4414123104135625945}
+  userInfo: {fileID: 4414123104135625947}
+--- !u!114 &4414123104135625947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414123104135625945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cbf776757d381b4793296b38a834d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onUserInfoEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
