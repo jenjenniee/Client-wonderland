@@ -28,3 +28,8 @@ public static class Utils
 	}
 }
 
+
+public static class SceneTheme
+{
+	public static string theme;
+}

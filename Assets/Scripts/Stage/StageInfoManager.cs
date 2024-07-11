@@ -16,13 +16,14 @@ public class StageInfoManager : MonoBehaviour
         infoUI.SetActive(false);
     }
 
-    public void ShowInfo()
+    public void ShowInfo(string theme)
     {
         infoUI.SetActive(true);
         canvasGroup.alpha = 1;
         clickCount++;
         if (clickCount == 2) {
             // 한 번 더 클릭하면 스테이지 진입.
+            SceneTheme.theme = theme;
             Utils.LoadScene(targetStage);
         }
     }

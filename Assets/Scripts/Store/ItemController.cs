@@ -10,10 +10,12 @@ public class ItemController : MonoBehaviour
     public CanvasGroup errorMessageUI;
     public TextMeshProUGUI errorText;
     public TextMeshProUGUI heartText;
+    private bool isSoldout;
 
     void Start()
     {
         heartText.text = $"{BackendGameData.Instance.UserGameData.heart}";
+        isSoldout = BackendGameData.Instance.UserGameData.hasItem;
     }
 
     public void Buy()
@@ -23,6 +25,7 @@ public class ItemController : MonoBehaviour
             GameObject.Find("Item").GetComponent<LoadItems>().CheckSoldOut();
             heartText.text = BackendGameData.Instance.UserGameData.heart.ToString();
             clickedUI.SetActive(false);
+            isSoldout = true;
         }
         else
         {
@@ -32,6 +35,7 @@ public class ItemController : MonoBehaviour
 
     public void ClickItem()
     {
+        if (isSoldout) return;
         clickedUI.SetActive(true);
     }
 

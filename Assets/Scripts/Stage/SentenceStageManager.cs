@@ -48,12 +48,11 @@ public class SentenceStageManager : MonoBehaviour
 
     private QuestionData problemData;
 
-    public string theme;
     private string stage3Url;
 
     private void Start()
     {
-        stage3Url = $"https://worderland.kro.kr/api/question/{theme}?stage=3";
+        stage3Url = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=3";
         // 패널의 너비를 가져옵니다.
         RectTransform panelRectTransform = wordPanel.GetComponent<RectTransform>();
         panelWidth = panelRectTransform.rect.width;

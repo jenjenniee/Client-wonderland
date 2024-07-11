@@ -64,8 +64,6 @@ public class ProblemController : MonoBehaviour
     //private bool solvingProblem = false;
 
     [SerializeField]
-    private string theme;
-    [SerializeField]
     private string stage;
 
     private string getProblemUrl;           // server url
@@ -75,7 +73,7 @@ public class ProblemController : MonoBehaviour
 
     private void Start()
     {
-        getProblemUrl = $"https://worderland.kro.kr/api/question/{theme}?stage={stage}";
+        getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage={stage}";
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
         StartCoroutine(GetRequest(getProblemUrl));
 
