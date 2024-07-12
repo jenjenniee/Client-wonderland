@@ -599,6 +599,7 @@ MonoBehaviour:
   equipText: {fileID: 197487795}
   equipButtonText: {fileID: 533108557}
   clickedUI: {fileID: 151407095}
+  item: {fileID: 408237860}
 --- !u!114 &408237867
 MonoBehaviour:
   m_ObjectHideFlags: 0

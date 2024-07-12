@@ -51,10 +51,12 @@ public class SentenceStageManager : MonoBehaviour
 
     private QuestionData problemData;
 
+    private string postAnswerUrl;
     private string stage3Url;
 
     private void Start()
     {
+        postAnswerUrl = "https://worderland.kro.kr/api/answer";
         stage3Url = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=3";
         // 패널의 너비를 가져옵니다.
         RectTransform panelRectTransform = wordPanel.GetComponent<RectTransform>();
@@ -140,7 +142,16 @@ public class SentenceStageManager : MonoBehaviour
             //wrong.
             wrong.SetActive(true);
         }
-        StartCoroutine(BackToMap());
+        AnswerData data = new AnswerData
+        {
+            questionId = problemData.questionId,
+            userId = UserInfo.Data.gamerId,
+            answer = selectedWord.text,
+        };
+
+        // JSON 문자열로 변환
+        string jsonData = JsonUtility.ToJson(data);
+        StartCoroutine(PostRequest(postAnswerUrl, jsonData));
     }
 
     IEnumerator BackToMap()
@@ -262,6 +273,32 @@ public class SentenceStageManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator PostRequest(string uri, string json)
+    {
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(uri, json))
+        {
+            byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // Send the request
+            yield return request.SendWebRequest();
+
+            // Error handling
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {request.error}\nResponse Code: {request.responseCode}\nResponse: {request.downloadHandler.text}");
+            }
+            else
+            {
+                string jsonResponse = request.downloadHandler.text;
+                Debug.Log($"Response: {jsonResponse}");
+            }
+        }
+        StartCoroutine(BackToMap());
     }
 }
 

@@ -361,7 +361,7 @@ CanvasGroup:
   m_GameObject: {fileID: 103178426}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &136289889
@@ -7493,7 +7493,7 @@ CanvasGroup:
   m_GameObject: {fileID: 3186333153527614241}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &4951519785133224987
@@ -8165,7 +8165,7 @@ CanvasGroup:
   m_GameObject: {fileID: 6421868669790628361}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!222 &9188782875951763409
@@ -8270,7 +8270,7 @@ CanvasGroup:
   m_GameObject: {fileID: 6421868668309922270}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!222 &9188782876003106473
@@ -8375,7 +8375,7 @@ CanvasGroup:
   m_GameObject: {fileID: 6421868668527153318}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1660057539 &9223372036854775807

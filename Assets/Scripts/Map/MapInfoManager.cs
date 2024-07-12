@@ -108,7 +108,7 @@ public class MapInfoManager : MonoBehaviour
                     objStageInfo.SetActive(true);
                     objNoInfo.SetActive(false);
 
-                    float correctness = Mathf.Floor(correct / 5f * 100f);
+                    float correctness = Mathf.Floor(correct / 11f * 100f);
                     textCorrectness.text = "Correctness";
                     textStageInfo.text = $"{correctness}%";
                     // 별 UI 업데이트

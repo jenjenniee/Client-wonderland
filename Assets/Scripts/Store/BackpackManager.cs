@@ -10,9 +10,15 @@ public class BackpackManager : MonoBehaviour
     public TextMeshProUGUI equipButtonText;
     public GameObject clickedUI;
 
+    public GameObject item;
+
     void Start()
     {
         UpdateState();
+        if (!BackendGameData.Instance.UserGameData.hasItem)
+        {
+            item.SetActive(false);
+        }
     }
 
     public void UpdateState()
@@ -28,4 +34,5 @@ public class BackpackManager : MonoBehaviour
             equipButtonText.text = "UNEQUIP";
         }
     }
+
 }

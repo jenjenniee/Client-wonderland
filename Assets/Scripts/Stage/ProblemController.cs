@@ -58,6 +58,8 @@ public class ProblemController : MonoBehaviour
     private TextMeshProUGUI textFollowingWord;
 
     private int problemNumber = 0;
+    private int stage1Number = 0;
+    private int stage2Number = 0;
     private bool timeout = false;
 
     private TimerController timerController;
@@ -142,7 +144,7 @@ public class ProblemController : MonoBehaviour
         // ���� ���� ����
         AnswerData data = new AnswerData
         {
-            questionId = problemData[0][problemNumber - 1].questionId,
+            questionId = problemData[0][stage1Number++].questionId,
             userId = UserInfo.Data.gamerId,
             answer = textAnswer[chosenNumber].text,
         };
@@ -172,14 +174,14 @@ public class ProblemController : MonoBehaviour
         //ocrCanvasGroup.interactable = false;
         timerController.onTimer = false;
         // ���� ���� ����
+        Debug.Log($"questionID: {problemData[1][stage2Number].questionId}, textOCR: {textOCR}, answer: {problemData[1][stage2Number].content}");
         AnswerData data = new AnswerData
         {
-            questionId = problemData[1][problemNumber - 1].questionId,
+            questionId = problemData[1][stage2Number++].questionId,
             userId = UserInfo.Data.gamerId,
             answer = textOCR,
         };
 
-        Debug.Log($"questionID: {problemData[1][problemNumber - 1].questionId}, textOCR: {textOCR}, answer: {problemData[1][problemNumber - 1].content}");
 
         // JSON 문자열로 변환
         string jsonData = JsonUtility.ToJson(data);
@@ -235,7 +237,7 @@ public class ProblemController : MonoBehaviour
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 6)
+        if (problemNumber == 11)
         {
             sentenceStageManager.NextStage();
         }
@@ -243,11 +245,18 @@ public class ProblemController : MonoBehaviour
         {
             textProblemNumber.text = $"Q{problemNumber}.";
             int problemStyle = Random.Range(0, 2);
+
+            // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
+            if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
+            // stage 2 다 끝났는데 problemStyle == 1 이면, 0으로 바꿈
+            if (stage2Number == 5 && problemStyle == 1) problemStyle = 0;
+
+
             if (problemStyle == 0)
             {
                 // 선택형
                 textProblem.text = "Select the correct word.";
-                string[] words = problemData[0][problemNumber - 1].content.Split(',');
+                string[] words = problemData[0][stage1Number].content.Split(',');
 
                 // set problem's answers
                 for (int i = 0; i < 4; i++)
@@ -267,7 +276,7 @@ public class ProblemController : MonoBehaviour
             {
                 // 주관식
                 textProblem.text = $"Correct the following word:";
-                textFollowingWord.text = $"{problemData[1][problemNumber - 1].content}ed";
+                textFollowingWord.text = $"{problemData[1][stage2Number].content}ed";
                 ocrPanel.SetActive(true);
                 StartCoroutine(StartProblem(2f));
             }
