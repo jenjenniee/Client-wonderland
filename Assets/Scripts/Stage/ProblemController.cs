@@ -276,7 +276,7 @@ public class ProblemController : MonoBehaviour
             {
                 // 주관식
                 textProblem.text = $"Correct the following word:";
-                textFollowingWord.text = $"{problemData[1][stage2Number].content}ed";
+                textFollowingWord.text = $"{problemData[1][stage2Number].content}";
                 ocrPanel.SetActive(true);
                 StartCoroutine(StartProblem(2f));
             }

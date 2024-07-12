@@ -84,6 +84,13 @@ public class SaveAndOCRScript : MonoBehaviour
             }
 
             Debug.Log("Extracted Text: " + text);
+
+            text = text.ToLower();
+            if (text[text.Length - 1] == ' ')
+            {
+                text = text.Substring(0, text.Length - 1);
+            }
+
             GameObject.Find("ProblemController").GetComponent<ProblemController>().OnSubmitOCR(text);
             StartCoroutine(ClearAfterSubmit());
         }

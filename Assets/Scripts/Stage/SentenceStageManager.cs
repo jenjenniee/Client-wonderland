@@ -130,6 +130,13 @@ public class SentenceStageManager : MonoBehaviour
 
     public void SubmitSelection()
     {
+        AnswerData data = new AnswerData
+        {
+            questionId = problemData.questionId,
+            userId = UserInfo.Data.gamerId,
+            answer = selectedWord.text,
+        };
+
         if (selectedWord.text == splittedSentence[2])
         {
             //correct.
@@ -142,12 +149,6 @@ public class SentenceStageManager : MonoBehaviour
             //wrong.
             wrong.SetActive(true);
         }
-        AnswerData data = new AnswerData
-        {
-            questionId = problemData.questionId,
-            userId = UserInfo.Data.gamerId,
-            answer = selectedWord.text,
-        };
 
         // JSON 문자열로 변환
         string jsonData = JsonUtility.ToJson(data);
