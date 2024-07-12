@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 103178429}
   - component: {fileID: 103178428}
   - component: {fileID: 103178430}
+  - component: {fileID: 103178431}
   m_Layer: 5
   m_Name: OCRPanel
   m_TagString: Untagged
@@ -351,6 +352,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawArea: {fileID: 756337083}
+--- !u!225 &103178431
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103178426}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &136289889
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +991,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: '10
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
   m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
@@ -1580,6 +1595,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: SaveAndOCRScript, Assembly-CSharp
         m_MethodName: SaveImageAndSendOCR
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 103178430}
+        m_TargetAssemblyTypeName: DrawScript, Assembly-CSharp
+        m_MethodName: CannotDrawing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 103178431}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6681,6 +6720,7 @@ MonoBehaviour:
   sentenceStageManager: {fileID: 519913253}
   tmp: {fileID: 1107035308}
   ocrPanel: {fileID: 103178426}
+  ocrCanvasGroup: {fileID: 103178431}
 --- !u!4 &2025958834
 Transform:
   m_ObjectHideFlags: 0
@@ -7431,7 +7471,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4279420163569556854}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4461804516010105342}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &4461804516010105342
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8091,7 +8143,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5639812334658649182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9188782875267974153}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &9188782875267974153
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8184,7 +8248,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5639812333446870921}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9188782875951763412}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &9188782875951763412
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8277,7 +8353,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5639812333260818161}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9188782876003106476}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &9188782876003106476
 CanvasGroup:
   m_ObjectHideFlags: 0

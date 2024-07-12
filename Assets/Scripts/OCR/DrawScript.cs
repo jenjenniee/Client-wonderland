@@ -6,11 +6,21 @@ public class DrawScript : MonoBehaviour
     public RawImage drawArea;
     private Texture2D drawTexture;
     private bool isDrawing = false;
+    private bool canDrawing = false;
     private Vector2 previousPos;
 
     void Start()
     {
         InitializeTexture();
+    }
+
+    public void CanDrawing()
+    {
+        canDrawing = true;
+    }
+    public void CannotDrawing()
+    {
+        canDrawing = false;
     }
 
     public void InitializeTexture()
@@ -56,7 +66,7 @@ public class DrawScript : MonoBehaviour
             isDrawing = false;
         }
 
-        if (isDrawing)
+        if (isDrawing && canDrawing)
         {
             Vector2 currentPos = GetMousePosition();
             if (IsWithinDrawArea(currentPos))

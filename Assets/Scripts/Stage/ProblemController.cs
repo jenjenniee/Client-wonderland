@@ -70,6 +70,7 @@ public class ProblemController : MonoBehaviour
     QuestionData[][] problemData = new QuestionData[2][];             // problem data from server. 10 problems get into this variable.
     public TextMeshProUGUI tmp;
     public GameObject ocrPanel;
+    public CanvasGroup ocrCanvasGroup;
 
     private void Start()
     {
@@ -128,7 +129,7 @@ public class ProblemController : MonoBehaviour
     private IEnumerator AfterHeartMove()
     {
         yield return new WaitForSecondsRealtime(1f);
-        BackendGameData.Instance.IncreaseHeart(50);
+        BackendGameData.Instance.IncreaseHeart(10);
         SetHeart();
     }
     /// <summary>
@@ -168,6 +169,7 @@ public class ProblemController : MonoBehaviour
 
     public void OnSubmitOCR(string textOCR)
     {
+        //ocrCanvasGroup.interactable = false;
         timerController.onTimer = false;
         // ���� ���� ����
         AnswerData data = new AnswerData
@@ -251,6 +253,7 @@ public class ProblemController : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     textAnswer[i].text = words[i];
+                    choiceButton[i].interactable = true;
                 }
 
                 //Debug.Log("A New Problem Set.");
@@ -276,6 +279,8 @@ public class ProblemController : MonoBehaviour
         yield return new WaitForSecondsRealtime(delayTime);
         timerController.onTimer = true;
         timeout = false;
+        ocrCanvasGroup.interactable = true;
+        ocrPanel.GetComponent<DrawScript>().CanDrawing();
     }
 
     private IEnumerator AnimalAppear(float delayTime, GameObject obj)
