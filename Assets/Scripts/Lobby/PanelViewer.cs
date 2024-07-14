@@ -11,7 +11,8 @@ public class PanelViewer : MonoBehaviour
 
     private void Awake()
     {
-        BackendGameData.Instance.onGameDataLoadEvent.AddListener(UpdateGameData);
+        // BackendGameData.Instance.onGameDataLoadEvent.AddListener(UpdateGameData);
+        UpdateGameData();
     }
 
     public void UpdateGameData()
