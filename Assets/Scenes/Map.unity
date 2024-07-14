@@ -373,10 +373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60373cece16c1fa4298f5d046941b324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theme: roller_coaster
-  textCorrectness: {fileID: 527724088}
+  theme: 2
   textStageInfo: {fileID: 480360435}
-  textNoInfo: {fileID: 1603680889}
   objCorrectness: {fileID: 527724086}
   objStageInfo: {fileID: 480360433}
   objNoInfo: {fileID: 1603680887}
@@ -2309,7 +2307,7 @@ GameObject:
   - component: {fileID: 480360436}
   - component: {fileID: 480360435}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Stage3Correctness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2443,7 +2441,7 @@ GameObject:
   - component: {fileID: 482139811}
   - component: {fileID: 482139810}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Stage1NoRecord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2905,7 +2903,7 @@ GameObject:
   - component: {fileID: 527724089}
   - component: {fileID: 527724088}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Stage3RecordTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2950,7 +2948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC815\uB2F5\uB960"
+  m_text: Correctness
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
   m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
@@ -3185,7 +3183,7 @@ GameObject:
   - component: {fileID: 545587547}
   - component: {fileID: 545587546}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Stage2RecordTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3230,7 +3228,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC815\uB2F5\uB960"
+  m_text: Correctness
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
   m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
@@ -4264,7 +4262,7 @@ GameObject:
   - component: {fileID: 742906852}
   - component: {fileID: 742906851}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Stage1RecordTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4309,7 +4307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC815\uB2F5\uB960"
+  m_text: Correctness
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
   m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
@@ -4398,7 +4396,7 @@ GameObject:
   - component: {fileID: 831137450}
   - component: {fileID: 831137449}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Stage2Correctness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5433,7 +5431,7 @@ GameObject:
   - component: {fileID: 1285055438}
   - component: {fileID: 1285055437}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Stage1Correctness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5903,10 +5901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60373cece16c1fa4298f5d046941b324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theme: carousel
-  textCorrectness: {fileID: 742906851}
+  theme: 0
   textStageInfo: {fileID: 1285055437}
-  textNoInfo: {fileID: 482139810}
   objCorrectness: {fileID: 742906849}
   objStageInfo: {fileID: 1285055435}
   objNoInfo: {fileID: 482139808}
@@ -6800,7 +6796,7 @@ GameObject:
   - component: {fileID: 1596062393}
   - component: {fileID: 1596062392}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Stage2NoRecord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6934,7 +6930,7 @@ GameObject:
   - component: {fileID: 1603680890}
   - component: {fileID: 1603680889}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Stage3NoRecord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7605,10 +7601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60373cece16c1fa4298f5d046941b324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theme: ferris_wheel
-  textCorrectness: {fileID: 545587546}
+  theme: 1
   textStageInfo: {fileID: 831137449}
-  textNoInfo: {fileID: 1596062392}
   objCorrectness: {fileID: 545587544}
   objStageInfo: {fileID: 831137447}
   objNoInfo: {fileID: 1596062390}

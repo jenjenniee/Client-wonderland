@@ -62,10 +62,14 @@ public class ProblemController : MonoBehaviour
     private int stage2Number = 0;
     private bool timeout = false;
 
+    // 별 애니메이션을 처리할 오브젝트
+    public GameObject starAnimation;
+
     private TimerController timerController;
     [SerializeField]
     private SentenceStageManager sentenceStageManager;
     //private bool solvingProblem = false;
+    private int problemStyle;
 
     private string getProblemUrl;           // server url
     private string postAnswerUrl;
@@ -76,6 +80,9 @@ public class ProblemController : MonoBehaviour
 
     private void Start()
     {
+        // 맞은 개수 초기화
+        NumberOfCorrect.Reset();
+
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
         getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=1";
         StartCoroutine(GetRequest(getProblemUrl, 1));
@@ -119,6 +126,38 @@ public class ProblemController : MonoBehaviour
             StartCoroutine(AfterHeartMove());
             correctAnimator[idx].SetActive(true);
             heartMove.SetActive(true);
+            NumberOfCorrect.numberOfCorrect++;
+            if (NumberOfCorrect.numberOfCorrect == 1)
+            {
+                if (SceneTheme.theme == "carousel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(1, 0);
+                } 
+                else if (SceneTheme.theme == "ferris_wheel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(2, 0);
+                }
+                else
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(3, 0);
+                }
+            }
+            if (NumberOfCorrect.numberOfCorrect == 6)
+            {
+                if (SceneTheme.theme == "carousel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(1, 1);
+                }
+                else if (SceneTheme.theme == "ferris_wheel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(2, 1);
+                }
+                else
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(3, 1);
+                }
+            }
+
         }
         else if (response == "오답 입니다")
         {
@@ -214,6 +253,20 @@ public class ProblemController : MonoBehaviour
         {
             btn.alpha = 0f;
         }
+        AnswerData data = new AnswerData
+        {
+            questionId = problemData[problemStyle][problemStyle == 0 ? stage1Number++ : stage2Number++].questionId,
+            userId = UserInfo.Data.gamerId,
+            answer = ".",
+        };
+
+
+        // JSON 문자열로 변환
+        string jsonData = JsonUtility.ToJson(data);
+
+        // POST 요청 시작
+        StartCoroutine(PostRequest(postAnswerUrl, jsonData, 4));
+
         yield return new WaitForSecondsRealtime(3f);
         foreach (GameObject obj in animals)
         {
@@ -222,14 +275,21 @@ public class ProblemController : MonoBehaviour
         ocrPanel.SetActive(false);
         textFollowingWord.text = "";
 
-        StartCoroutine(SetNewProblem(0f));
+        //StartCoroutine(SetNewProblem(0f));
     }
 
     private IEnumerator SetNewProblem(float delayTime)
     {
         yield return new WaitForSecondsRealtime(delayTime);
 
-        timerController.NewProblemTimer(20f);
+        problemStyle = Random.Range(0, 2);
+
+        // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
+        if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
+        // stage 2 다 끝났는데 problemStyle == 1 이면, 0으로 바꿈
+        if (stage2Number == 5 && problemStyle == 1) problemStyle = 0;
+
+        timerController.NewProblemTimer(problemStyle == 0 ? 5f : 20f);
         timerController.onTimer = false;
         heartMove.SetActive(false);
 
@@ -244,12 +304,6 @@ public class ProblemController : MonoBehaviour
         else
         {
             textProblemNumber.text = $"Q{problemNumber}.";
-            int problemStyle = Random.Range(0, 2);
-
-            // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
-            if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
-            // stage 2 다 끝났는데 problemStyle == 1 이면, 0으로 바꿈
-            if (stage2Number == 5 && problemStyle == 1) problemStyle = 0;
 
 
             if (problemStyle == 0)
@@ -371,5 +425,16 @@ public class ProblemController : MonoBehaviour
             string jsonResponse = request.downloadHandler.text;
             CheckAnswer(jsonResponse, idx);
         }
+    }
+}
+
+
+static public class NumberOfCorrect
+{
+    static public int numberOfCorrect = 0;
+
+    static public void Reset()
+    {
+        numberOfCorrect = 0;
     }
 }

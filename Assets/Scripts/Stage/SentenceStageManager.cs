@@ -49,10 +49,16 @@ public class SentenceStageManager : MonoBehaviour
     [SerializeField] private GameObject correct;
     [SerializeField] private GameObject wrong;
 
+    // 별 애니메이션을 처리할 오브젝트
+    public GameObject starAnimation;
+
     private QuestionData problemData;
 
     private string postAnswerUrl;
     private string stage3Url;
+
+    // 게임 끝나고 게임 정보 업데이트
+    public GameObject getMapInformation;
 
     private void Start()
     {
@@ -143,6 +149,22 @@ public class SentenceStageManager : MonoBehaviour
             selectedWord.text = splittedSentence[1];
             BackendGameData.Instance.IncreaseHeart(50);
             correct.SetActive(true);
+            NumberOfCorrect.numberOfCorrect++;
+            if (NumberOfCorrect.numberOfCorrect == 11)
+            {
+                if (SceneTheme.theme == "carousel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(1, 2);
+                }
+                else if (SceneTheme.theme == "ferris_wheel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(2, 2);
+                }
+                else
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(3, 2);
+                }
+            }
         }
         else
         {
@@ -157,6 +179,7 @@ public class SentenceStageManager : MonoBehaviour
 
     IEnumerator BackToMap()
     {
+        getMapInformation.SetActive(true);
         yield return new WaitForSecondsRealtime(3f);
         Utils.LoadScene("Map");
     }
