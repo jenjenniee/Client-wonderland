@@ -861,7 +861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1491807836}
   SFXSource: {fileID: 2002980888}
-  background: {fileID: 8300000, guid: 8ff2859fa087e144a98805696f6f80d9, type: 3}
+  background: {fileID: 8300000, guid: b904613cd03871c4f9598f75e9753203, type: 3}
   click: {fileID: 8300000, guid: 245965889d0a183438ef3478b27122c0, type: 3}
   attack: {fileID: 0}
   boom: {fileID: 0}

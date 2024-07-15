@@ -13,6 +13,7 @@ public class ItemController : MonoBehaviour
     public TextMeshProUGUI heartText;
     private bool isSoldout;
     public string itemId;
+    public TextMeshProUGUI priceTag;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class ItemController : MonoBehaviour
     }
 
     /// <summary>
-    /// »óÁ¡ ÁøÀÔ½Ã, ÀÌ¹Ì ±¸¸ÅÇÑ ItemÀº SoldOut Ã³¸®.
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô½ï¿½, ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Itemï¿½ï¿½ SoldOut Ã³ï¿½ï¿½.
     /// </summary>
     public void CheckSoldOut()
     {
@@ -33,9 +34,11 @@ public class ItemController : MonoBehaviour
         }
     }
 
-    public void Buy()
+    public void Buy(int price)
     {
-        if(BackendGameData.Instance.BuyItem(itemId, 100))
+        price = int.Parse(priceTag.text);
+        Debug.Log(price);
+        if(BackendGameData.Instance.BuyItem(itemId, price))
         {
             CheckSoldOut();
             heartText.text = BackendGameData.Instance.UserGameData.heart.ToString();
@@ -44,7 +47,7 @@ public class ItemController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ErrorMessage("ÇÏÆ®°¡ ¸ðÀÚ¶ø´Ï´Ù!"));
+            StartCoroutine(ErrorMessage("ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ï´ï¿½!"));
         }
     }
 
