@@ -3,14 +3,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class UserGameData
 {
-    public int heart;       // ÀçÈ­
-    public string equipHead;   // Âø¿ëÁßÀÎ ±â³äÇ°
+    public int heart;       // ï¿½ï¿½È­
+    public string equipHead;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç°
     public Dictionary<string, bool> hasItem = new Dictionary<string, bool>();
 
     public void Reset()
     {
         heart = 0;
-        equipHead = "i001";      // ¾Æ¹«°Íµµ Âø¿ë ¾È ÇÑ »óÅÂ
+        equipHead = "i001";      // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         hasItem.Clear();
         hasItem["i001"] = true;
     }
