@@ -3,6 +3,7 @@ using BackEnd;
 using TMPro;
 using System;
 using UnityEngine.Events;
+using System.Collections.Generic;
 public class BackendGameData
 {
     [System.Serializable]
@@ -22,6 +23,8 @@ public class BackendGameData
         }
     }
 
+    public static List<ItemData> itemList = new List<ItemData>();
+
     private UserGameData userGameData = new UserGameData();
     public UserGameData UserGameData => userGameData;
 
@@ -38,8 +41,11 @@ public class BackendGameData
         {
             { "heart",      userGameData.heart },
             { "equipHead",  userGameData.equipHead },
-            { "hasItem",    userGameData.hasItem },
         };
+        foreach (var item in userGameData.hasItem)
+        {
+            param.Add(item.Key, item.Value);
+        }
 
         Backend.GameData.Insert("USER_DATA", param, callback =>
         {
@@ -81,13 +87,18 @@ public class BackendGameData
                     }
                     else
                     {
-                        // �ҷ��� ���� ������ ������
                         gameDataRowInDate = gameDataJson[0]["inDate"].ToString();
-                        // ���� ������ ������ ������ ����
                         userGameData.heart = int.Parse(gameDataJson[0]["heart"].ToString());
-                        userGameData.equipHead = int.Parse(gameDataJson[0]["equipHead"].ToString());
-                        userGameData.hasItem = bool.Parse(gameDataJson[0]["hasItem"].ToString());
+                        userGameData.equipHead = (gameDataJson[0]["equipHead"].ToString());
+                        //userGameData.hasItem = bool.Parse(gameDataJson[0]["hasItem"].ToString());
 
+                        foreach (var key in gameDataJson[0].Keys)
+                        {
+                            if (key.StartsWith("i")) {
+                                userGameData.hasItem[key] = gameDataJson[0][key].ToString() == "true";
+                            }
+                        }
+                        LoadChartData();
                         onGameDataLoadEvent?.Invoke();
                         Utils.LoadScene(SceneNames.Loby);
                     }
@@ -166,17 +177,20 @@ public class BackendGameData
         
     }
 
-    public bool BuyItem(int index, int price)
+    public bool BuyItem(string itemId, int price)
     {
         // index는 아이템이 여러개일때 유효함.
-
-        if (userGameData.heart >= price)
+        if (userGameData.hasItem.ContainsKey(itemId))
         {
-            DecreaseHeart(price);
-            userGameData.hasItem = true;
-            UpdateItem(); 
-            return true;
+            if (userGameData.heart >= price)
+            {
+                DecreaseHeart(price);
+                userGameData.hasItem[itemId] = true;
+                UpdateItem();
+                return true;
+            }
         }
+        
         // 구매 실패 : 재화 부족
         return false;
     }
@@ -189,10 +203,11 @@ public class BackendGameData
             return;
         }
 
-        Param param = new Param()
+        Param param = new Param();
+        foreach (var item in userGameData.hasItem)
         {
-            { "hasItem", userGameData.hasItem }
-        };
+            param.Add(item.Key, item.Value);
+        }
 
         if (string.IsNullOrEmpty(gameDataRowInDate))
         {
@@ -214,20 +229,23 @@ public class BackendGameData
             });
         }
 
+
     }
 
 
-    public void EquipItem(int index)
+    public void EquipItem(string itemId)
     {
+        if (userGameData.hasItem.ContainsKey(itemId))
+        {
+            userGameData.equipHead = itemId;
+        }
         // index는 아이템이 여러개일때 유효함.
-        userGameData.equipHead = index;
         UpdateEquipment();
     }
 
     public void UnequipItem()
     {
-        // index는 아이템이 여러개일때 유효함.
-        userGameData.equipHead = 0;
+        userGameData.equipHead = "i001";
         UpdateEquipment();
     }
 
@@ -265,4 +283,60 @@ public class BackendGameData
         }
 
     }
+    // 차트 데이터 불러오기
+    public void LoadChartData()
+    {
+        Backend.Chart.GetChartContents("131115", callback => {
+            if (callback.IsSuccess())
+            {
+                try
+                {
+                    LitJson.JsonData gameDataJson = callback.FlattenRows();
+
+                    if (gameDataJson.Count <= 0)
+                    {
+                        //Debug.Log("�����Ͱ� �������� �ʽ��ϴ�.");
+                    }
+                    else
+                    {
+                        for (int i=0;i<gameDataJson.Count;i++)
+                        {
+                            ItemData item = new ItemData();
+                            item.itemID = gameDataJson[i]["itemID"].ToString();
+                            item.itemName = gameDataJson[i]["itemName"].ToString();
+                            item.itemPrice = int.Parse(gameDataJson[i]["itemPrice"].ToString());
+                            itemList.Add(item);
+
+                            //Debug.Log($"{item.itemID}: {userGameData.hasItem[item.itemID]}");
+                            // 사용자의 hasItem 초기화
+                            if (!userGameData.hasItem.ContainsKey(item.itemID))
+                            {
+                                userGameData.hasItem[item.itemID] = false;
+                                Debug.Log($"{item.itemID}: {userGameData.hasItem[item.itemID]}");
+                            }
+
+                        }
+                        Debug.Log("차트 데이터 불러오기 성공");
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+            else
+            {
+                Debug.LogError("차트 데이터 불러오기 실패: " + callback.GetMessage());
+            }
+        });
+    }
+}
+
+
+[System.Serializable]
+public class ItemData
+{
+    public string itemID;
+    public string itemName;
+    public int itemPrice;
 }

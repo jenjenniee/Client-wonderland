@@ -17,7 +17,7 @@ public class CharacterSprite : MonoBehaviour
     {
         if (BackendGameData.Instance != null)
         {
-            if (BackendGameData.Instance.UserGameData.equipHead == 1)
+            if (BackendGameData.Instance.UserGameData.equipHead == "i101")
             {
                 GetComponent<Image>().sprite = equipSprite;
             }
@@ -28,16 +28,16 @@ public class CharacterSprite : MonoBehaviour
         }
     }
 
-    public void EquipItemTemporary()
+    public void EquipItemTemporary(string itemId)
     {
-        if (!BackendGameData.Instance.UserGameData.hasItem)
+        if (!BackendGameData.Instance.UserGameData.hasItem[itemId])
             GetComponent<Image>().sprite = equipSprite;
     }
-    public void ToggleItemEquipment()
+    public void SetItemEquipment(string itemId)
     {
-        if (BackendGameData.Instance.UserGameData.equipHead == 0)
+        if (BackendGameData.Instance.UserGameData.equipHead != itemId)
         {
-            BackendGameData.Instance.EquipItem(1);
+            BackendGameData.Instance.EquipItem(itemId);
         }
         else
         {

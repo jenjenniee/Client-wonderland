@@ -93,6 +93,7 @@ static public class Star
         }
         else
         {
+            noRecord[stage - 1] = false;
             correctness[stage - 1] = stageCorrect * 100 / 11;
             stageStar[idx++] = correctness[stage - 1] > 0;
             stageStar[idx++] = correctness[stage - 1] >= 50;

@@ -543,10 +543,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e04bf0ca85b54d48b1b5cd73c468424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldOut: {fileID: 593840764}
   clickedUI: {fileID: 151407095}
   errorMessageUI: {fileID: 1642839697}
   errorText: {fileID: 1738712252}
   heartText: {fileID: 1805689059}
+  itemId: i101
 --- !u!114 &408237865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,13 +581,13 @@ MonoBehaviour:
         - m_Target: {fileID: 1510569761}
           m_TargetAssemblyTypeName: CharacterSprite, Assembly-CSharp
           m_MethodName: EquipItemTemporary
-          m_Mode: 1
+          m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: i101
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 408237868}
@@ -612,7 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57660fc8384e5404799b518802a75643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldOut: {fileID: 593840764}
 --- !u!114 &408237867
 MonoBehaviour:
   m_ObjectHideFlags: 0

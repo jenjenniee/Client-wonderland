@@ -6,23 +6,38 @@ using UnityEngine.EventSystems;
 
 public class ItemController : MonoBehaviour
 {
+    public GameObject soldOut;
     public GameObject clickedUI;
     public CanvasGroup errorMessageUI;
     public TextMeshProUGUI errorText;
     public TextMeshProUGUI heartText;
     private bool isSoldout;
+    public string itemId;
 
     void Start()
     {
         heartText.text = $"{BackendGameData.Instance.UserGameData.heart}";
-        isSoldout = BackendGameData.Instance.UserGameData.hasItem;
+        CheckSoldOut();
+    }
+
+    /// <summary>
+    /// 상점 진입시, 이미 구매한 Item은 SoldOut 처리.
+    /// </summary>
+    public void CheckSoldOut()
+    {
+        Debug.Log($"hasItem: {BackendGameData.Instance.UserGameData.hasItem}");
+        if (BackendGameData.Instance.UserGameData.hasItem[itemId])
+        {
+            soldOut.SetActive(true);
+            isSoldout = true;
+        }
     }
 
     public void Buy()
     {
-        if(BackendGameData.Instance.BuyItem(0, 100))
+        if(BackendGameData.Instance.BuyItem(itemId, 100))
         {
-            GameObject.Find("Item").GetComponent<LoadItems>().CheckSoldOut();
+            CheckSoldOut();
             heartText.text = BackendGameData.Instance.UserGameData.heart.ToString();
             clickedUI.SetActive(false);
             isSoldout = true;
