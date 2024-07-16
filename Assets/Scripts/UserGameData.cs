@@ -13,5 +13,7 @@ public class UserGameData
         equipHead = "i001";      // �ƹ��͵� ���� �� �� ����
         hasItem.Clear();
         hasItem["i001"] = true;
+
     }
+  
 }

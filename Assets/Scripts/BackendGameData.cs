@@ -36,7 +36,7 @@ public class BackendGameData
     public void GameDataInsert()
     {
         userGameData.Reset();
-
+        
         Param param = new Param()
         {
             { "heart",      userGameData.heart },
@@ -197,6 +197,7 @@ public class BackendGameData
 
     public void UpdateItem()
     {
+        Debug.Log("아오아아아아아;");
         if (userGameData == null)
         {
             Debug.LogError("데이터가 존재하지 않습니다. Initialize 혹은 Get을 통해 데이터를 생성해주세요.");
@@ -228,8 +229,6 @@ public class BackendGameData
                 }
             });
         }
-
-
     }
 
 
@@ -286,7 +285,7 @@ public class BackendGameData
     // 차트 데이터 불러오기
     public void LoadChartData()
     {
-        Backend.Chart.GetChartContents("131115", callback => {
+        Backend.Chart.GetChartContents("131331", callback => {
             if (callback.IsSuccess())
             {
                 try

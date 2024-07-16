@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSprite : MonoBehaviour
-{
-    public Sprite equipSprite;
+{ 
     public Sprite unequipSprite;
-
+    public Sprite []equipSprite;
     void Start()
     {
         UpdateCharacterSprite();
@@ -17,21 +16,23 @@ public class CharacterSprite : MonoBehaviour
     {
         if (BackendGameData.Instance != null)
         {
-            if (BackendGameData.Instance.UserGameData.equipHead == "i101")
+            if (BackendGameData.Instance.UserGameData.equipHead!="i001")
             {
-                GetComponent<Image>().sprite = equipSprite;
+                int num = int.Parse(BackendGameData.Instance.UserGameData.equipHead.Substring(1));
+                GetComponent<Image>().sprite = equipSprite[num - 101];
             }
             else
-            {
                 GetComponent<Image>().sprite = unequipSprite;
-            }
         }
     }
 
     public void EquipItemTemporary(string itemId)
     {
+
+        int num = int.Parse(itemId.Substring(1));
+
         if (!BackendGameData.Instance.UserGameData.hasItem[itemId])
-            GetComponent<Image>().sprite = equipSprite;
+            GetComponent<Image>().sprite = equipSprite[num-101];
     }
     public void SetItemEquipment(string itemId)
     {

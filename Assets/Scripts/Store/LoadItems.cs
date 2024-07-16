@@ -5,12 +5,11 @@ using static UnityEditor.Progress;
 
 public class LoadItems : MonoBehaviour
 {
-    // µ¥¸ð ¹öÀü¿¡¼­´Â ¾ÆÀÌÅÛÀÌ ÇÏ³ª¶ó ÃßÈÄ ¾ÆÀÌÅÛ Ãß°¡½Ã ¼öÁ¤ ÇÊ¿ä.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½.
     //public GameObject[] items;
 
     void Start()
     {
         //CheckSoldOut();
     }
-
 }
