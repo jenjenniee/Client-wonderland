@@ -101,7 +101,8 @@ public class BackendGameData
                         }
                         LoadChartData();
                         onGameDataLoadEvent?.Invoke();
-                        Utils.LoadScene(SceneNames.Loby);
+                        //Utils.LoadScene(SceneNames.Loby);
+                        Loading.CompleteLoad();
                     }
                 }
                 catch (System.Exception e)

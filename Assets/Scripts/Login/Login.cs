@@ -23,6 +23,9 @@ public class Login : LoginBase
 
 	[SerializeField]
 	private UserInfo userInfo;
+
+	[SerializeField]
+	private GameObject loginScenario;
 	
 	/// <summary>
 	/// 회원가입에서 로그인으로 넘어올 때 호출
@@ -76,12 +79,13 @@ public class Login : LoginBase
                 //BackendChartData.LoadAllChart();
 
 				// userDB
-                BackendGameData.Instance.GameDataLoad(); // 데이터를 초기화 합니다
-                userInfo.GetUserInfoFromBackend();
+                //BackendGameData.Instance.GameDataLoad(); // 데이터를 초기화 합니다
+                //userInfo.GetUserInfoFromBackend();
 
-                // Lobby ������ �̵�
-                //Utils.LoadScene(SceneNames.Loby);
-
+				// Lobby ������ �̵�
+				//Utils.LoadScene(SceneNames.Loby);
+				loginScenario.SetActive(true);
+				Loading.SetLoading();
 
                 // 불러오려는 데이터가 존재하지 않을 경우, 데이터를 새로 추가합니다.
                 if (BackendGameData.Instance.UserGameData == null)

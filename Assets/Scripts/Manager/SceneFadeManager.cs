@@ -7,10 +7,10 @@ public class SceneFadeManager : MonoBehaviour
     public CanvasGroup sceneFadeOut;
     public GameObject sceneFadeOutObj;
 
-    public void FadeOut()
+    private void Start()
     {
-        sceneFadeOutObj.SetActive(true);
-        StartCoroutine(FadeUI(0.2f, 1f, sceneFadeOut));
+        //sceneFadeOutObj.SetActive(true);
+        StartCoroutine(FadeUI(2f, 0f, sceneFadeOut));
     }
 
     IEnumerator FadeUI(float duration, float targetAlpha, CanvasGroup ui)
@@ -24,6 +24,7 @@ public class SceneFadeManager : MonoBehaviour
             yield return null;
         }
         ui.alpha = targetAlpha;
-        ui.interactable = true;
+        ui.interactable = false;
+        sceneFadeOutObj.SetActive(false);
     }
 }
