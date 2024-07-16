@@ -4768,6 +4768,10 @@ MonoBehaviour:
   - {fileID: 1629788022}
   logoPanel: {fileID: 87197466}
   sceneGroup: {fileID: 181872486}
+  set:
+  - {fileID: 913140390}
+  - {fileID: 1629788022}
+  - {fileID: 575016464}
 --- !u!114 &1154528825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8636,9 +8640,9 @@ SceneRoots:
   - {fileID: 1154528826}
   - {fileID: 519420032}
   - {fileID: 697024451}
-  - {fileID: 913140394}
-  - {fileID: 1629788026}
-  - {fileID: 575016468}
   - {fileID: 181872487}
   - {fileID: 87197471}
   - {fileID: 1474771771}
+  - {fileID: 913140394}
+  - {fileID: 1629788026}
+  - {fileID: 575016468}

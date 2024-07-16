@@ -13,15 +13,12 @@ public class LobbyScenario : MonoBehaviour
     public GameObject logoPanel;
     // �ε� �Ϸ� �� ������ Object
     public GameObject sceneGroup;
+    public GameObject[] set = new GameObject[3];
 
     private void Update()
     {
         // �ε� �Ϸ� ����
-        if (!Loading.isLoading)
-        {
-            // �ε� �Ϸ�Ǹ� UI ��������ϱ�
-            StartCoroutine(AfterLoading());
-        }
+        
     }
 
     private void Awake()
@@ -32,8 +29,21 @@ public class LobbyScenario : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.GetInt("isLoading") != 1)
+        {
+            foreach (GameObject s in set)
+            {
+                s.SetActive(false);
+            }
+            logoPanel.SetActive(false);
+            sceneGroup.SetActive(true);
+        }
+        else
+        {
+            StartCoroutine(AfterLoading());
+            PlayerPrefs.SetInt("isLoading", 0);
+        }
         BackendGameData.Instance.GameDataLoad();
-        
     }
 
     IEnumerator FadeUI(float duration, float targetAlpha, CanvasGroup ui)
