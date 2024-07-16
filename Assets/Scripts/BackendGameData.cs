@@ -94,8 +94,9 @@ public class BackendGameData
 
                         foreach (var key in gameDataJson[0].Keys)
                         {
+                            Debug.Log($"Key: {key}, Value: {gameDataJson[0][key]}");
                             if (key.StartsWith("i")) {
-                                userGameData.hasItem[key] = gameDataJson[0][key].ToString() == "true";
+                                userGameData.hasItem[key] = gameDataJson[0][key].ToString() == "True";
                             }
                         }
                         LoadChartData();

@@ -1085,8 +1085,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7834f972170cad44aa86ab8cefcca42f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipSprite: {fileID: 21300000, guid: f24f828c2ad99934790ef2f32cb8e5cf, type: 3}
   unequipSprite: {fileID: 21300000, guid: 808ebfec8ed27d94ea81bde6f8a60d75, type: 3}
+  equipSprite:
+  - {fileID: 21300000, guid: f24f828c2ad99934790ef2f32cb8e5cf, type: 3}
+  - {fileID: 21300000, guid: dc2811f1fa0754c4e8d92a8dbb268ff7, type: 3}
+  - {fileID: 21300000, guid: 2d6a8aa3c98f946c5ab73aad9d40f59a, type: 3}
+  - {fileID: 21300000, guid: 8b7316199380b4039bf39c3c01e25fea, type: 3}
+  - {fileID: 21300000, guid: 4071f115ee4d4423cafe20e4485b45ee, type: 3}
+  - {fileID: 21300000, guid: 3b8e32863efe24350ad94ede7f370ac1, type: 3}
+  - {fileID: 21300000, guid: f73fa3a3d2e984cd59719557e3412042, type: 3}
+  - {fileID: 21300000, guid: 1a869be3473e845649f06f1cba4711ca, type: 3}
 --- !u!114 &266105281
 MonoBehaviour:
   m_ObjectHideFlags: 0
