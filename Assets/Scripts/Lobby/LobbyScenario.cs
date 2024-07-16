@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LobbyScenario : MonoBehaviour
 {
+    
     [SerializeField]
     private UserInfo user;
-
+    
     private void Awake()
     {
         user.GetUserInfoFromBackend();
@@ -15,6 +16,7 @@ public class LobbyScenario : MonoBehaviour
 
     private void Start()
     {
-        BackendGameData.Instance.GameDataLoad();   
+        BackendGameData.Instance.GameDataLoad();
+        
     }
 }

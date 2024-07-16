@@ -22,11 +22,12 @@ public class MemberCheckData
 public class FirstLoginChecker : MonoBehaviour
 {
     private string getUri;
-
+    
     private void Start()
     {
         getUri = $"https://worderland.kro.kr/api/member_check?userId={UserInfo.Data.gamerId}";
         StartCoroutine(GetMemberCheck(getUri));
+      
     }
 
     IEnumerator GetMemberCheck(string uri)
@@ -35,29 +36,29 @@ public class FirstLoginChecker : MonoBehaviour
         {
             yield return request.SendWebRequest();
 
-            // ¿À·ù Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
             }
             else
             {
-                // ÀÀ´ä ¹Þ±â
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log("Response: " + jsonResponse);
 
-                // JSON ÆÄ½Ì
+                // JSON ï¿½Ä½ï¿½
                 MemberCheckResponseData responseData = JsonUtility.FromJson<MemberCheckResponseData>(jsonResponse);
 
-                // µ¥ÀÌÅÍ Á¢±Ù
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (responseData.success)
                 {
                     if (responseData.data.result)
                     {
-                        // À¯Àú°¡ Ã³À½ ·Î±×ÀÎÇÑ »óÈ² -> Áø´Ü Å×½ºÆ® On
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È² -> ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® On
                     }else
                     {
-                        // ÀÌ¹Ì Áø´ÜÅ×½ºÆ® º» »óÈ² -> ¹«½Ã
+                        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½È² -> ï¿½ï¿½ï¿½ï¿½
                     }
                 }
                 else

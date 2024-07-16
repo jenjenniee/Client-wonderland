@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 611164254}
   m_Layer: 0
   m_Name: SoundManager
-  m_TagString: Untagged
+  m_TagString: Audio
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -869,6 +869,7 @@ MonoBehaviour:
   Bubble: {fileID: 0}
   Jungle: {fileID: 0}
   Sea: {fileID: 0}
+  transitionTime: 2
 --- !u!1 &656450488
 GameObject:
   m_ObjectHideFlags: 0
