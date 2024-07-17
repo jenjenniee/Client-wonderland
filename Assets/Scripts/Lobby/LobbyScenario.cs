@@ -45,7 +45,7 @@ public class LobbyScenario : MonoBehaviour
         }
         BackendGameData.Instance.GameDataLoad();
     }
-
+    
     IEnumerator FadeUI(float duration, float targetAlpha, CanvasGroup ui)
     {
         float time = 0f;
