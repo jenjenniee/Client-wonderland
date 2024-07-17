@@ -51,6 +51,7 @@ public class ProblemData : MonoBehaviour
             // 坷幅 贸府
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
+                Loading.OnError();
                 Debug.LogError(request.error);
             }
             else
@@ -79,6 +80,7 @@ public class ProblemData : MonoBehaviour
                 }
                 else
                 {
+                    Loading.OnError();
                     Debug.LogError("Request failed with message: " + responseData.message);
                 }
             }
@@ -94,6 +96,7 @@ public class ProblemData : MonoBehaviour
             // 坷幅 贸府
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
+                Loading.OnError();
                 Debug.LogError(request.error);
             }
             else
@@ -123,6 +126,7 @@ public class ProblemData : MonoBehaviour
                 }
                 else
                 {
+                    Loading.OnError();
                     Debug.LogError("Request failed with message: " + responseData.message);
                 }
             }

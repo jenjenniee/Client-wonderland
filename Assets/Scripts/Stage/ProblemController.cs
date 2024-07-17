@@ -81,6 +81,8 @@ public class ProblemController : MonoBehaviour
 
     private List<Sprite> spriteFromServer;      // 서버에서 받아온 이미지를 스프라이트 형태로 저장하는 배열
     public GameObject problemImage;             // 이미지를 보여줄 오브젝트 -> Image.sprite
+    public GameObject ttsButton;                  // TTS로 들려줄 텍스트를 보여줄 오브젝트, Alpha == 0f
+    public GameObject ttsText;                  // TTS로 들려줄 텍스트를 보여줄 오브젝트, Alpha == 0f
 
     private void Start()
     {
@@ -252,6 +254,7 @@ public class ProblemController : MonoBehaviour
         ocrPanel.SetActive(false);
         problemImage.SetActive(false);
         textFollowingWord.text = "";
+        ttsButton.SetActive(false);
 
         StartCoroutine(SetNewProblem(0f));
     }
@@ -356,9 +359,11 @@ public class ProblemController : MonoBehaviour
                 else
                 {
                     string[] words = problemData[1][stage2Number].content.Split(",");
-                    textProblem.text = $"Fill in the blanks to complete the word:";
+                    textProblem.text = $"Listen and fill in the blanks:";
                     textFollowingWord.text = $"{words[0]}";
                     // words[1]은 TTS용
+                    ttsText.GetComponent<TextMeshProUGUI>().text = words[1];
+                    ttsButton.SetActive(true);
                 }
                 ocrPanel.SetActive(true);
                 StartCoroutine(StartProblem(2f));
