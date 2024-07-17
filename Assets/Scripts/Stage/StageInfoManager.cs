@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class StageInfoManager : MonoBehaviour
@@ -8,12 +10,16 @@ public class StageInfoManager : MonoBehaviour
     public string targetStage;          // �� �� �� Ŭ�� �� �Ѿ�� stage
     private CanvasGroup canvasGroup;    // alpha ������ ����
     private int clickCount = 0;
-
+    public SceneChanger sceneChanger;
+    public GameObject playSet;
+    public GameObject mapSet;
+    Camera mainCamera;
     // Start is called before the first frame update
     void Start()
     {
         canvasGroup = infoUI.GetComponent<CanvasGroup>();
         infoUI.SetActive(false);
+        mainCamera = Camera.main;
     }
 
     public void ShowInfo(string theme)
@@ -22,14 +28,14 @@ public class StageInfoManager : MonoBehaviour
         canvasGroup.alpha = 1;
         clickCount++;
         if (clickCount == 2) {
+            playSet.SetActive(true);
+            sceneChanger.waitScene(targetStage);
+            if (mainCamera != null)
+                mainCamera.backgroundColor = Color.black;
+            mapSet.SetActive(false);
         }
     }
-    void changeScene(string theme)
-    {
-        // �� �� �� Ŭ���ϸ� �������� ����.
-        SceneTheme.theme = theme;
-        Utils.LoadScene(targetStage);
-    }
+    
     public void CloseInfo()
     {
         canvasGroup.alpha = 0;
