@@ -22,6 +22,7 @@ public class MemberCheckData
 public class FirstLoginChecker : MonoBehaviour
 {
     private string getUri;
+    public GameObject surveyUI;
     
     private void Start()
     {
@@ -56,6 +57,7 @@ public class FirstLoginChecker : MonoBehaviour
                     if (responseData.data.result)
                     {
                         // ������ ó�� �α����� ��Ȳ -> ���� �׽�Ʈ On
+                        surveyUI.SetActive(true);
                     }else
                     {
                         // �̹� �����׽�Ʈ �� ��Ȳ -> ����
