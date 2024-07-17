@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StageInfoManager : MonoBehaviour
 {
-    public GameObject infoUI;           // Å¬¸¯ ½Ã ¶ç¿öÁö´Â Á¤º¸Ã¢
-    public string targetStage;          // ÇÑ ¹ø ´õ Å¬¸¯ ½Ã ³Ñ¾î°¡´Â stage
-    private CanvasGroup canvasGroup;    // alpha Á¶Á¤À» À§ÇÔ
+    public GameObject infoUI;           // Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢
+    public string targetStage;          // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ stage
+    private CanvasGroup canvasGroup;    // alpha ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int clickCount = 0;
 
     // Start is called before the first frame update
@@ -22,12 +22,14 @@ public class StageInfoManager : MonoBehaviour
         canvasGroup.alpha = 1;
         clickCount++;
         if (clickCount == 2) {
-            // ÇÑ ¹ø ´õ Å¬¸¯ÇÏ¸é ½ºÅ×ÀÌÁö ÁøÀÔ.
-            SceneTheme.theme = theme;
-            Utils.LoadScene(targetStage);
         }
     }
-
+    void changeScene(string theme)
+    {
+        // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        SceneTheme.theme = theme;
+        Utils.LoadScene(targetStage);
+    }
     public void CloseInfo()
     {
         canvasGroup.alpha = 0;
