@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -135,6 +136,10 @@ public class ProblemController : MonoBehaviour
             Debug.Log("진입");
             StartCoroutine(AfterHeartMove());
             correctAnimator[idx].SetActive(true);
+            if (idx < 4)
+            {
+                animals[idx].GetComponent<Animator>().SetBool("Correct", true);
+            }
             heartMove.SetActive(true);
             NumberOfCorrect.numberOfCorrect++;
             if (NumberOfCorrect.numberOfCorrect == 1)
@@ -217,6 +222,13 @@ public class ProblemController : MonoBehaviour
         //StartCoroutine(ChoiseAnimation(chosenNumber));
     }
 
+    /// <summary>
+    /// 버튼을 눌렀는데, TimeOut이 되는 경우를 방지하기 위함
+    /// </summary>
+    public void TimeStop()
+    {
+        timerController.onTimer = false;
+    }
 
     public void OnSubmitOCR(string textOCR)
     {
@@ -248,6 +260,7 @@ public class ProblemController : MonoBehaviour
         {
             choiceButton[chosenNumber].alpha = 0f;
             animals[chosenNumber].SetActive(false);
+            animals[chosenNumber].GetComponent<Animator>().SetBool("Correct", false);
         }
         correctAnimator[chosenNumber].SetActive(false);
         wrongAnimator[chosenNumber].SetActive(false);
@@ -264,6 +277,7 @@ public class ProblemController : MonoBehaviour
         foreach (CanvasGroup btn in choiceButton)
         {
             btn.alpha = 0f;
+            btn.interactable = false;
         }
         AnswerData data = new AnswerData
         {
@@ -271,6 +285,7 @@ public class ProblemController : MonoBehaviour
             userId = UserInfo.Data.gamerId,
             answer = ".",
         };
+        ocrCanvasGroup.interactable = false;
 
 
         // JSON 문자열로 변환
@@ -295,7 +310,7 @@ public class ProblemController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delayTime);
 
-        problemStyle = Random.Range(0, 2);
+        problemStyle = UnityEngine.Random.Range(0, 2);
 
         // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
         if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
@@ -339,7 +354,7 @@ public class ProblemController : MonoBehaviour
                 //Debug.Log("A New Problem Set.");
                 for (int i = 0; i < 4; i++)
                 {
-                    StartCoroutine(AnimalAppear(Random.Range(0f, 1f), animals[i]));
+                    StartCoroutine(AnimalAppear(UnityEngine.Random.Range(0f, 1f), animals[i]));
                 }
                 StartCoroutine(StartProblem(3f));
             }
@@ -359,7 +374,7 @@ public class ProblemController : MonoBehaviour
                 else
                 {
                     string[] words = problemData[1][stage2Number].content.Split(",");
-                    textProblem.text = $"Listen and fill in the blanks:";
+                    textProblem.text = $"Listen and complete the word:";
                     textFollowingWord.text = $"{words[0]}";
                     // words[1]은 TTS용
                     ttsText.GetComponent<TextMeshProUGUI>().text = words[1];
@@ -383,67 +398,12 @@ public class ProblemController : MonoBehaviour
     private IEnumerator AnimalAppear(float delayTime, GameObject obj)
     {
         yield return new WaitForSecondsRealtime(delayTime);
-        int index = Random.Range(0, 4);
+        int index = UnityEngine.Random.Range(0, 4);
         obj.GetComponent<SpriteRenderer>().sprite = animalSprites[index];
         obj.SetActive(true);
         obj.GetComponent<Animator>().SetInteger("Index", index);
     }
 
-    /// <summary>
-    /// Get Problem Set from server.
-    /// </summary>
-    /// <param name="uri"></param>
-    /// <returns></returns>
-    IEnumerator GetRequest(string uri, int stage)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get(uri))
-        {
-            // 요청 보내기
-            yield return request.SendWebRequest();
-
-            // 오류 처리
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError(request.error);
-            }
-            else
-            {
-                // 응답 받기
-                string jsonResponse = request.downloadHandler.text;
-                Debug.Log("Response: " + jsonResponse);
-
-                // JSON 파싱
-                QuestionResponseData responseData = JsonUtility.FromJson<QuestionResponseData>(jsonResponse);
-
-                // 데이터 접근
-                if (responseData.success)
-                {
-                    problemData[stage - 1] = responseData.data.Clone() as QuestionData[];
-                    // 잘 복사 됐는지 보는 로고
-                    /*
-                    foreach (QuestionData questionData in problemData[0])
-                    {
-                        int questionId = questionData.questionId;
-                        string content = questionData.content;
-                        //Debug.Log("Question ID: " + questionId);
-                        //Debug.Log("Content: " + content);
-                    }
-                    */
-                    Debug.Log($"Response: {problemData[stage - 1]}");
-
-                    // 2 스테이지 문제라면, 미리 이미지 다운로드.
-                    if (stage == 2)
-                    {
-                        CheckIsImageProblem();
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Request failed with message: " + responseData.message);
-                }
-            }
-        }
-    }
     IEnumerator PostRequest(string uri, string json, int idx)
     {
         var request = new UnityWebRequest(uri, "POST");
@@ -464,41 +424,6 @@ public class ProblemController : MonoBehaviour
         {
             string jsonResponse = request.downloadHandler.text;
             CheckAnswer(jsonResponse, idx);
-        }
-    }
-
-
-    /// <summary>
-    /// 이미지 url에서 이미지를 다운로드 받아 Sprite로 등록
-    /// </summary>
-    /// <param name="url">이미지 url</param>
-    /// <returns></returns>
-    IEnumerator DownloadImage(string url)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(request.error);
-        }
-        else
-        {
-            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            spriteFromServer.Add(sprite);
-        }
-    }
-
-
-    private void CheckIsImageProblem()
-    {
-        foreach(var content in problemData[1])
-        {
-            if (content.content.StartsWith("http"))
-            {
-                StartCoroutine(DownloadImage(content.content));
-            }
         }
     }
 }

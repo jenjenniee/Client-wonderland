@@ -1963,8 +1963,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 393562302}
-        m_TargetAssemblyTypeName: ChallengePanelManager, Assembly-CSharp
+      - m_Target: {fileID: 530569638}
+        m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
         m_MethodName: TogglePanel
         m_Mode: 1
         m_Arguments:
