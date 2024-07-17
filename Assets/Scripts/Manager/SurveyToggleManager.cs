@@ -9,6 +9,7 @@ public class SurveyToggleManager : MonoBehaviour
 {
     public ToggleGroup[] surveyToggleGroup = new ToggleGroup[6];
     public GameObject surveyUI;
+    public GameObject surveyResultUI;
     private int[] scores = new int[6];
     public void PressSubmitButton()
     {
@@ -28,7 +29,6 @@ public class SurveyToggleManager : MonoBehaviour
             }
         }
         StartCoroutine(PostRequest(totalScore));
-        surveyUI.SetActive(false);
     }
 
     IEnumerator PostRequest(int totalScore)
@@ -40,7 +40,8 @@ public class SurveyToggleManager : MonoBehaviour
         };
         string uri = "https://worderland.kro.kr/api/survey/add";
         string json = JsonUtility.ToJson(data);
-        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(uri, json))
+
+        using (UnityWebRequest request = new UnityWebRequest(uri, "POST"))
         {
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -58,19 +59,41 @@ public class SurveyToggleManager : MonoBehaviour
             else
             {
                 string jsonResponse = request.downloadHandler.text;
+                SurveyResponse responseData = JsonUtility.FromJson<SurveyResponse>(jsonResponse);
+
                 Debug.Log($"Response: {jsonResponse}");
-                // response 데이터를 사용할 일 있으면 추가하기
+
+                // Ensure the responseData is not null and has valid data
+                if (responseData != null && responseData.data != null)
+                {
+                    surveyResultUI.SetActive(true);
+                    SurveyResultManager resultManager = surveyResultUI.GetComponent<SurveyResultManager>();
+                    if (resultManager != null)
+                    {
+                        resultManager.SetText(responseData.data);
+                        Debug.Log("SetText executed successfully.");
+                    }
+                    else
+                    {
+                        Debug.LogError("SurveyResultManager component not found on surveyResultUI.");
+                    }
+                    surveyUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogError("Response data is null or invalid.");
+                }
             }
         }
     }
 }
-
+[System.Serializable]
 public class SurveyData
 {
     public string userId;
     public int scoreResult;
 }
-
+[System.Serializable]
 public class SurveyResponse
 {
     public int status;
@@ -78,7 +101,7 @@ public class SurveyResponse
     public string message;
     public SurveyResponseData data;
 }
-
+[System.Serializable]
 public class SurveyResponseData
 {
     public string result;
