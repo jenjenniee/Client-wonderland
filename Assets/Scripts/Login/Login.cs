@@ -73,7 +73,8 @@ public class Login : LoginBase
 			// 로그인 성공
 			if ( callback.IsSuccess() )
 			{
-				SetMessage($"Welcome, {inputFieldID.text}!");
+				PlayerPrefs.SetInt("isLoading", 1);
+                SetMessage($"Welcome, {inputFieldID.text}!");
 
                 // ��� ��Ʈ ������ �ҷ�����
                 //BackendChartData.LoadAllChart();

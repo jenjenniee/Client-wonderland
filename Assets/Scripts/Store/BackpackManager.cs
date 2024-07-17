@@ -15,13 +15,16 @@ public class BackpackManager : MonoBehaviour
 
     void Start()
     {
-        UpdateState();
+        
         if (!BackendGameData.Instance.UserGameData.hasItem[itemId])
         {
             item.SetActive(false);
         }
     }
-
+    private void Update()
+    {
+        UpdateState();
+    }
     public void UpdateState()
     {
         if (BackendGameData.Instance.UserGameData.equipHead == itemId)
