@@ -4,6 +4,7 @@ using TMPro;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class QuestionData
@@ -78,16 +79,23 @@ public class ProblemController : MonoBehaviour
     public GameObject ocrPanel;
     public CanvasGroup ocrCanvasGroup;
 
+    private List<Sprite> spriteFromServer;      // 서버에서 받아온 이미지를 스프라이트 형태로 저장하는 배열
+    public GameObject problemImage;             // 이미지를 보여줄 오브젝트 -> Image.sprite
+
     private void Start()
     {
         // 맞은 개수 초기화
         NumberOfCorrect.Reset();
 
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
+        /*
         getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=1";
         StartCoroutine(GetRequest(getProblemUrl, 1));
         getProblemUrl = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=2";
         StartCoroutine(GetRequest(getProblemUrl, 2));
+        */
+        problemData = ProblemData.instance.problemData.Clone() as QuestionData[][];
+        spriteFromServer = ProblemData.instance.spriteFromServer;
 
         timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
         timerController.onTimer = false;
@@ -242,6 +250,7 @@ public class ProblemController : MonoBehaviour
         correctAnimator[chosenNumber].SetActive(false);
         wrongAnimator[chosenNumber].SetActive(false);
         ocrPanel.SetActive(false);
+        problemImage.SetActive(false);
         textFollowingWord.text = "";
 
         StartCoroutine(SetNewProblem(0f));
@@ -273,6 +282,7 @@ public class ProblemController : MonoBehaviour
             obj.SetActive(false);
         }
         ocrPanel.SetActive(false);
+        problemImage.SetActive(false);
         textFollowingWord.text = "";
 
         //StartCoroutine(SetNewProblem(0f));
@@ -289,7 +299,7 @@ public class ProblemController : MonoBehaviour
         // stage 2 다 끝났는데 problemStyle == 1 이면, 0으로 바꿈
         if (stage2Number == 5 && problemStyle == 1) problemStyle = 0;
 
-        timerController.NewProblemTimer(problemStyle == 0 ? 5f : 20f);
+        timerController.NewProblemTimer(problemStyle == 0 ? 10f : 20f);
         timerController.onTimer = false;
         heartMove.SetActive(false);
 
@@ -309,13 +319,17 @@ public class ProblemController : MonoBehaviour
             if (problemStyle == 0)
             {
                 // 선택형
-                textProblem.text = "Select the correct word.";
+                // "ProblemTitle,Word[4]" 형식으로 보내주므로, Split하고 index 0이 문제 내용임. 나머지는 단어 선택지.
                 string[] words = problemData[0][stage1Number].content.Split(',');
+
+                // Problem Title
+                textProblem.text = words[0];
 
                 // set problem's answers
                 for (int i = 0; i < 4; i++)
                 {
-                    textAnswer[i].text = words[i];
+                    // words[1] ~ words[4]가 선택지 단어이므로 매핑. Mapping all words to each answer text.
+                    textAnswer[i].text = words[i + 1];
                     choiceButton[i].interactable = true;
                 }
 
@@ -329,8 +343,23 @@ public class ProblemController : MonoBehaviour
             else
             {
                 // 주관식
-                textProblem.text = $"Correct the following word:";
-                textFollowingWord.text = $"{problemData[1][stage2Number].content}";
+                // "http..."로 시작하면 사진형 문제.
+                if (problemData[1][stage2Number].content.StartsWith("http"))
+                {
+                    textProblem.text = $"What's in the picture below?";
+                    problemImage.SetActive(true);
+                    // 현재 이미지 문제는 하나이므로 0으로 두었음
+                    problemImage.GetComponent<Image>().sprite = spriteFromServer[0];
+                }
+                // 아니라면 채우기 문제
+                // 이때 tts 필요
+                else
+                {
+                    string[] words = problemData[1][stage2Number].content.Split(",");
+                    textProblem.text = $"Fill in the blanks to complete the word:";
+                    textFollowingWord.text = $"{words[0]}";
+                    // words[1]은 TTS용
+                }
                 ocrPanel.SetActive(true);
                 StartCoroutine(StartProblem(2f));
             }
@@ -396,6 +425,12 @@ public class ProblemController : MonoBehaviour
                     }
                     */
                     Debug.Log($"Response: {problemData[stage - 1]}");
+
+                    // 2 스테이지 문제라면, 미리 이미지 다운로드.
+                    if (stage == 2)
+                    {
+                        CheckIsImageProblem();
+                    }
                 }
                 else
                 {
@@ -424,6 +459,41 @@ public class ProblemController : MonoBehaviour
         {
             string jsonResponse = request.downloadHandler.text;
             CheckAnswer(jsonResponse, idx);
+        }
+    }
+
+
+    /// <summary>
+    /// 이미지 url에서 이미지를 다운로드 받아 Sprite로 등록
+    /// </summary>
+    /// <param name="url">이미지 url</param>
+    /// <returns></returns>
+    IEnumerator DownloadImage(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError(request.error);
+        }
+        else
+        {
+            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            spriteFromServer.Add(sprite);
+        }
+    }
+
+
+    private void CheckIsImageProblem()
+    {
+        foreach(var content in problemData[1])
+        {
+            if (content.content.StartsWith("http"))
+            {
+                StartCoroutine(DownloadImage(content.content));
+            }
         }
     }
 }

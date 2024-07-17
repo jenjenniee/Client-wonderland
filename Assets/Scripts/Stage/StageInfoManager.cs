@@ -33,6 +33,7 @@ public class StageInfoManager : MonoBehaviour
             if (mainCamera != null)
                 mainCamera.backgroundColor = Color.black;
             mapSet.SetActive(false);
+            ProblemData.instance.OnLoadStageData(theme);
         }
     }
     

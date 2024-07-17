@@ -5,12 +5,24 @@ using UnityEngine;
 public class SceneChanger : MonoBehaviour
 {
     string targetStage;
+    bool isLoading = false;
+
+    private void Update()
+    {
+        if (isLoading && !Loading.isLoading)
+        {
+            ChangeScene();
+        }
+    }
+
     public void waitScene(string target)
     {
         targetStage = target;
-        Invoke("changeScene", 6f);
+        Loading.isLoading = true;
+        isLoading = true;
+        //Invoke("changeScene", 6f);
     }
-    void changeScene()
+    void ChangeScene()
     {
         Utils.LoadScene(targetStage);
     }

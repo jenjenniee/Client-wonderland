@@ -63,11 +63,29 @@ public class SentenceStageManager : MonoBehaviour
     private void Start()
     {
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
-        stage3Url = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=3";
         // 패널의 너비를 가져옵니다.
         RectTransform panelRectTransform = wordPanel.GetComponent<RectTransform>();
         panelWidth = panelRectTransform.rect.width;
-        StartCoroutine(GetRequest(stage3Url));
+        problemData = ProblemData.instance.problem3Data;
+
+        splittedSentence = problemData.content.Split('+');
+        sentence.text = "";
+
+        foreach (string word in splittedSentence[0].Split(' '))
+        {
+            if (word == splittedSentence[2])
+            {
+                sentence.text += splittedSentence[1] + " ";
+            }
+            else
+            {
+                sentence.text += word + " ";
+            }
+            CreateWord(word);
+        }
+
+        //stage3Url = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=3";
+        //StartCoroutine(GetRequest(stage3Url));
     }
 
     public void NextStage()
