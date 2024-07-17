@@ -45,7 +45,7 @@ public class LoginBase : MonoBehaviour
 	{
 		if ( field.Trim().Equals("") )
 		{
-			GuideForIncorrectlyEnteredData(image, $"\"{result}\" 필드를 채워주세요.");
+			GuideForIncorrectlyEnteredData(image, $"\"{result}\" Please fill out the fields.");
 
 			return true;
 		}
