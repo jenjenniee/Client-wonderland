@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,11 +11,6 @@ public class score : MonoBehaviour
 {
     private string userId;
     private const string API_URL = "https://worderland.kro.kr/api/result/return?userId=";
-    public RectTransform panelTransform1; // 첫 번째 패널의 RectTransform
-    public RectTransform panelTransform2; // 두 번째 패널의 RectTransform
-    public LineRenderer totalAverageLineRenderer; // Total Average 값을 그릴 LineRenderer
-    public LineRenderer totalBestLineRenderer; // Total Best 값을 그릴 LineRenderer
-    public Canvas canvas; // UI 캔버스
 
     [Serializable]
     public class ThemeResult
@@ -45,29 +43,37 @@ public class score : MonoBehaviour
         public List<DailyResult> data;
     }
 
+    [SerializeField] private Graph graphManager;
+    [SerializeField] private RectTransform graphPanel;
+    [SerializeField] private ThemeInfoDisplay themeInfoDisplay;
+
+    private void PrepareAndDrawGraphs(List<DailyResult> dailyResults)
+    {
+        List<float> dailyBestList = new List<float>();
+        List<float> dailyAverageList = new List<float>();
+
+        foreach (var dailyResult in dailyResults)
+        {
+            float dailyBest = float.MinValue;
+            float dailySum = 0;
+
+            foreach (var themeResult in dailyResult.result)
+            {
+                dailyBest = Mathf.Max(dailyBest, themeResult.totalBestRecord);
+                dailySum += themeResult.totalAverageRecord;
+            }
+
+            dailyBestList.Add(dailyBest);
+            dailyAverageList.Add(dailySum / dailyResult.result.Count);
+        }
+
+        graphManager.DrawGraphs(dailyAverageList, dailyBestList, graphPanel);
+        themeInfoDisplay.DisplayThemeInfo(dailyResults[dailyResults.Count - 1].result);  // 가장 최근 날짜의 테마 정보 표시
+    }
+
     private void Start()
     {
         userId = UserInfo.Data.gamerId;
-        InitializeLineRenderers();
-        GetUserGameReport();
-    }
-
-    private void InitializeLineRenderers()
-    {
-        // LineRenderer 초기 설정
-        totalAverageLineRenderer.positionCount = 0;
-        totalAverageLineRenderer.startWidth = 0.1f;
-        totalAverageLineRenderer.endWidth = 0.1f;
-        totalAverageLineRenderer.useWorldSpace = false; // 패널의 자식으로 설정되어 있을 경우
-        totalAverageLineRenderer.sortingLayerName = "UI"; // UI 레이어로 설정
-        totalAverageLineRenderer.sortingOrder = 10; // 다른 UI 요소들 위에 그려지도록 설정
-
-        totalBestLineRenderer.positionCount = 0;
-        totalBestLineRenderer.startWidth = 0.1f;
-        totalBestLineRenderer.endWidth = 0.1f;
-        totalBestLineRenderer.useWorldSpace = false; // 패널의 자식으로 설정되어 있을 경우
-        totalBestLineRenderer.sortingLayerName = "UI"; // UI 레이어로 설정
-        totalBestLineRenderer.sortingOrder = 10; // 다른 UI 요소들 위에 그려지도록 설정
     }
 
     public void GetUserGameReport()
@@ -138,73 +144,6 @@ public class score : MonoBehaviour
         }
         Debug.Log("============================");
 
-        UpdateGraph(dailyResults);
-    }
-
-    private void UpdateGraph(List<DailyResult> dailyResults)
-    {
-        List<Vector3> totalAveragePoints = new List<Vector3>();
-        List<Vector3> totalBestPoints = new List<Vector3>();
-
-        float panelWidth1 = panelTransform1.rect.width;
-        float panelHeight1 = panelTransform1.rect.height;
-        float panelWidth2 = panelTransform2.rect.width;
-        float panelHeight2 = panelTransform2.rect.height;
-        float xInterval1 = panelWidth1 / (dailyResults.Count - 1);
-        float xInterval2 = panelWidth2 / (dailyResults.Count - 1);
-        float maxValue = GetMaxValue(dailyResults);
-
-        Debug.Log($"Panel1 Width: {panelWidth1}, Height: {panelHeight1}");
-        Debug.Log($"Panel2 Width: {panelWidth2}, Height: {panelHeight2}");
-        Debug.Log($"Max Value: {maxValue}");
-
-        for (int i = 0; i < dailyResults.Count; i++)
-        {
-            var dailyResult = dailyResults[i];
-            float totalAverage = 0f;
-            float totalBest = 0f;
-
-            foreach (var themeResult in dailyResult.result)
-            {
-                totalAverage += themeResult.totalAverageRecord;
-                totalBest += themeResult.totalBestRecord;
-            }
-
-            float normalizedTotalAverage = (totalAverage / maxValue) * panelHeight1;
-            float normalizedTotalBest = (totalBest / maxValue) * panelHeight2;
-
-            Vector2 localPoint1 = new Vector2(i * xInterval1, normalizedTotalAverage);
-            Vector2 localPoint2 = new Vector2(i * xInterval2, normalizedTotalBest);
-
-            totalAveragePoints.Add(panelTransform1.TransformPoint(localPoint1));
-            totalBestPoints.Add(panelTransform2.TransformPoint(localPoint2));
-
-            Debug.Log($"Local Point1: {localPoint1}, Transformed Point1: {panelTransform1.TransformPoint(localPoint1)}");
-            Debug.Log($"Local Point2: {localPoint2}, Transformed Point2: {panelTransform2.TransformPoint(localPoint2)}");
-        }
-
-        totalAverageLineRenderer.positionCount = totalAveragePoints.Count;
-        totalBestLineRenderer.positionCount = totalBestPoints.Count;
-
-        totalAverageLineRenderer.SetPositions(totalAveragePoints.ToArray());
-        totalBestLineRenderer.SetPositions(totalBestPoints.ToArray());
-    }
-
-    private float GetMaxValue(List<DailyResult> dailyResults)
-    {
-        float maxValue = 0f;
-
-        foreach (var dailyResult in dailyResults)
-        {
-            foreach (var themeResult in dailyResult.result)
-            {
-                if (themeResult.totalAverageRecord > maxValue)
-                    maxValue = themeResult.totalAverageRecord;
-                if (themeResult.totalBestRecord > maxValue)
-                    maxValue = themeResult.totalBestRecord;
-            }
-        }
-
-        return maxValue;
+        PrepareAndDrawGraphs(dailyResults);
     }
 }
