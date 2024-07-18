@@ -68,10 +68,7 @@ public class ProblemData : MonoBehaviour
                 {
                     problemData[stage - 1] = responseData.data.Clone() as QuestionData[];
                     Debug.Log($"Response: {problemData[stage - 1]}");
-                    loadingCount++;
-                    if (loadingCount == 3)
-                        Loading.isLoading = false;
-
+                    Loading.sceneLoadedCount++;
                     // 2 스테이지 문제라면, 미리 이미지 다운로드.
                     if (stage == 2)
                     {
@@ -112,9 +109,7 @@ public class ProblemData : MonoBehaviour
                 if (responseData.success)
                 {
                     problem3Data = responseData.data;
-                    loadingCount++;
-                    if (loadingCount == 3)
-                        Loading.isLoading = false;
+                    Loading.sceneLoadedCount++;
 
                     // 잘 복사 됐는지 보는 로고
                     /*

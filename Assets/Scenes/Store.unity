@@ -2411,7 +2411,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642839693}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2565,8 +2565,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You don't have enough hearts!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
-  m_sharedMaterial: {fileID: -1046554369672518021, guid: 129fc9afb42ad3042aa06eb434408f60, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 44f2fc9c400d044b1bbfabdc1cfb429b, type: 2}
+  m_sharedMaterial: {fileID: -8510001921188493366, guid: 44f2fc9c400d044b1bbfabdc1cfb429b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
