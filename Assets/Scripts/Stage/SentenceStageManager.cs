@@ -167,7 +167,36 @@ public class SentenceStageManager : MonoBehaviour
             selectedWord.text = splittedSentence[1];
             BackendGameData.Instance.IncreaseHeart(50);
             correct.SetActive(true);
-            NumberOfCorrect.numberOfCorrect++;
+            NumberOfCorrect.numberOfCorrect++; if (NumberOfCorrect.numberOfCorrect == 1)
+            {
+                if (SceneTheme.theme == "carousel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(1, 0);
+                }
+                else if (SceneTheme.theme == "ferris_wheel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(2, 0);
+                }
+                else
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(3, 0);
+                }
+            }
+            if (NumberOfCorrect.numberOfCorrect == 6)
+            {
+                if (SceneTheme.theme == "carousel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(1, 1);
+                }
+                else if (SceneTheme.theme == "ferris_wheel")
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(2, 1);
+                }
+                else
+                {
+                    starAnimation.GetComponent<GainStarManager>().GainStar(3, 1);
+                }
+            }
             if (NumberOfCorrect.numberOfCorrect == 11)
             {
                 if (SceneTheme.theme == "carousel")

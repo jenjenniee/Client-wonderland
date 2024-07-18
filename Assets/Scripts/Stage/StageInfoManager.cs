@@ -29,6 +29,7 @@ public class StageInfoManager : MonoBehaviour
         clickCount++;
         if (clickCount == 2) {
             playSet.SetActive(true);
+            SceneTheme.theme = theme;
             sceneChanger.waitScene(targetStage);
             if (mainCamera != null)
                 mainCamera.backgroundColor = Color.black;
