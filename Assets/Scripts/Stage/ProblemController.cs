@@ -307,6 +307,7 @@ public class ProblemController : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        GameObject.Find("OCRPanel").GetComponent<DrawScript>().InitializeTexture();
         ocrPanel.SetActive(false);
         problemImage.SetActive(false);
         textFollowingWord.text = "";
@@ -375,7 +376,7 @@ public class ProblemController : MonoBehaviour
                     textProblem.text = $"What's in the picture below?";
                     problemImage.SetActive(true);
                     // 현재 이미지 문제는 하나이므로 0으로 두었음
-                    problemImage.GetComponent<Image>().sprite = spriteFromServer[0];
+                    problemImage.GetComponent<Image>().sprite = spriteFromServer[spriteFromServer.Count - 1];
                 }
                 // 아니라면 채우기 문제
                 // 이때 tts 필요
