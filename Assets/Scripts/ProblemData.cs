@@ -10,8 +10,6 @@ public class ProblemData : MonoBehaviour
     public QuestionData[][] problemData = new QuestionData[2][];
     public QuestionData problem3Data;
     public List<Sprite> spriteFromServer;
-
-    private int loadingCount = 0;
     private void Awake()
     {
         if (instance == null)
@@ -68,11 +66,15 @@ public class ProblemData : MonoBehaviour
                 {
                     problemData[stage - 1] = responseData.data.Clone() as QuestionData[];
                     Debug.Log($"Response: {problemData[stage - 1]}");
-                    Loading.sceneLoadedCount++;
                     // 2 스테이지 문제라면, 미리 이미지 다운로드.
                     if (stage == 2)
                     {
                         CheckIsImageProblem();
+                    }
+                    else
+                    {
+
+                        Loading.sceneLoadedCount++;
                     }
                 }
                 else
@@ -148,6 +150,7 @@ public class ProblemData : MonoBehaviour
             Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             spriteFromServer.Add(sprite);
+            Loading.sceneLoadedCount++;
         }
     }
 
