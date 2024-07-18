@@ -232,15 +232,23 @@ public class ProblemController : MonoBehaviour
 
     public void OnSubmitOCR(string textOCR)
     {
+        string answerText = "";
+        foreach (char c in textOCR)
+        {
+            if (c == ' ') continue;
+            answerText += c;
+        }
+
+
         //ocrCanvasGroup.interactable = false;
         timerController.onTimer = false;
         // ���� ���� ����
-        Debug.Log($"questionID: {problemData[1][stage2Number].questionId}, textOCR: {textOCR}, answer: {problemData[1][stage2Number].content}");
+        Debug.Log($"questionID: {problemData[1][stage2Number].questionId}, textOCR: {answerText}, answer: {problemData[1][stage2Number].content}");
         AnswerData data = new AnswerData
         {
             questionId = problemData[1][stage2Number++].questionId,
             userId = UserInfo.Data.gamerId,
-            answer = textOCR,
+            answer = answerText,
         };
 
 
