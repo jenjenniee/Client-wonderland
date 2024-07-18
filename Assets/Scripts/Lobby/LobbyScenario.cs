@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class LobbyScenario : MonoBehaviour
 {
-    
+
     [SerializeField]
     private UserInfo user;
 
-    // �ε� �Ϸ� �� ����� UI
+    //  ε   Ϸ           UI
     public GameObject[] circles = new GameObject[3];
     public GameObject logoPanel;
-    // �ε� �Ϸ� �� ������ Object
+    //  ε   Ϸ            Object
     public GameObject sceneGroup;
     public GameObject[] set = new GameObject[3];
 
     private void Update()
     {
-        // �ε� �Ϸ� ����
-        
+        //  ε   Ϸ      
+
     }
 
     private void Awake()
@@ -45,7 +45,7 @@ public class LobbyScenario : MonoBehaviour
         }
         BackendGameData.Instance.GameDataLoad();
     }
-    
+
     IEnumerator FadeUI(float duration, float targetAlpha, CanvasGroup ui)
     {
         float time = 0f;

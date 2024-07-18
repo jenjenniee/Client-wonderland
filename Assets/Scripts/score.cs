@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,9 +8,11 @@ public class score : MonoBehaviour
 {
     private string userId;
     private const string API_URL = "https://worderland.kro.kr/api/result/return?userId=";
-    public GraphDrawer graphDrawer; // Inspector에서 할당
-    public RectTransform bestGraphPanel; // totalBestRecord 그래프를 그릴 패널
-    public RectTransform averageGraphPanel; // totalAverageRecord 그래프를 그릴 패널
+    public RectTransform panelTransform1; // 첫 번째 패널의 RectTransform
+    public RectTransform panelTransform2; // 두 번째 패널의 RectTransform
+    public LineRenderer totalAverageLineRenderer; // Total Average 값을 그릴 LineRenderer
+    public LineRenderer totalBestLineRenderer; // Total Best 값을 그릴 LineRenderer
+    public Canvas canvas; // UI 캔버스
 
     [Serializable]
     public class ThemeResult
@@ -47,6 +48,26 @@ public class score : MonoBehaviour
     private void Start()
     {
         userId = UserInfo.Data.gamerId;
+        InitializeLineRenderers();
+        GetUserGameReport();
+    }
+
+    private void InitializeLineRenderers()
+    {
+        // LineRenderer 초기 설정
+        totalAverageLineRenderer.positionCount = 0;
+        totalAverageLineRenderer.startWidth = 0.1f;
+        totalAverageLineRenderer.endWidth = 0.1f;
+        totalAverageLineRenderer.useWorldSpace = false; // 패널의 자식으로 설정되어 있을 경우
+        totalAverageLineRenderer.sortingLayerName = "UI"; // UI 레이어로 설정
+        totalAverageLineRenderer.sortingOrder = 10; // 다른 UI 요소들 위에 그려지도록 설정
+
+        totalBestLineRenderer.positionCount = 0;
+        totalBestLineRenderer.startWidth = 0.1f;
+        totalBestLineRenderer.endWidth = 0.1f;
+        totalBestLineRenderer.useWorldSpace = false; // 패널의 자식으로 설정되어 있을 경우
+        totalBestLineRenderer.sortingLayerName = "UI"; // UI 레이어로 설정
+        totalBestLineRenderer.sortingOrder = 10; // 다른 UI 요소들 위에 그려지도록 설정
     }
 
     public void GetUserGameReport()
@@ -70,7 +91,6 @@ public class score : MonoBehaviour
             else
             {
                 string jsonResponse = webRequest.downloadHandler.text;
-                Debug.Log("Raw API Response: " + jsonResponse);
                 ProcessGameReport(jsonResponse);
             }
         }
@@ -79,9 +99,10 @@ public class score : MonoBehaviour
     private void ProcessGameReport(string jsonResponse)
     {
         ApiResponse response = JsonUtility.FromJson<ApiResponse>(jsonResponse);
+
         if (response.status == 200 && response.success)
         {
-            DrawGraphs(response.data);
+            DisplayGameReport(response.data);
         }
         else
         {
@@ -89,45 +110,101 @@ public class score : MonoBehaviour
         }
     }
 
-    private void DrawGraphs(List<DailyResult> dailyResults)
+    private void DisplayGameReport(List<DailyResult> dailyResults)
     {
-        Debug.Log("DrawGraphs called");
-        Dictionary<string, List<Vector2>> themeBestData = new Dictionary<string, List<Vector2>>();
-        Dictionary<string, List<Vector2>> themeAverageData = new Dictionary<string, List<Vector2>>();
-
-        // Initialize with a starting point (0, 0)
+        Debug.Log("======= Game Report =======");
         foreach (var dailyResult in dailyResults)
         {
-            double dayIndex = System.DateTime.Parse(dailyResult.date).ToOADate();
+            Debug.Log($"Date: {dailyResult.date}");
+
             foreach (var themeResult in dailyResult.result)
             {
-                if (!themeBestData.ContainsKey(themeResult.theme))
-                {
-                    themeBestData[themeResult.theme] = new List<Vector2>();
-                    themeAverageData[themeResult.theme] = new List<Vector2>();
-                    // Add the starting point (0, 0)
-                    themeBestData[themeResult.theme].Add(new Vector2(0, 0));
-                    themeAverageData[themeResult.theme].Add(new Vector2(0, 0));
-                }
-                themeBestData[themeResult.theme].Add(new Vector2((float)dayIndex, themeResult.totalBestRecord));
-                themeAverageData[themeResult.theme].Add(new Vector2((float)dayIndex, themeResult.totalAverageRecord));
-                Debug.Log($"Added point for theme {themeResult.theme} (Best): {dayIndex}, {themeResult.totalBestRecord}");
-                Debug.Log($"Added point for theme {themeResult.theme} (Average): {dayIndex}, {themeResult.totalAverageRecord}");
+                Debug.Log($"  Theme: {themeResult.theme}");
+                Debug.Log($"    First Stage:");
+                Debug.Log($"      Best Record: {themeResult.firstStageBestRecord}");
+                Debug.Log($"      Average Record: {themeResult.firstStageAverageRecord}");
+                Debug.Log($"    Second Stage:");
+                Debug.Log($"      Best Record: {themeResult.secondStageBestRecord}");
+                Debug.Log($"      Average Record: {themeResult.secondStageAverageRecord}");
+                Debug.Log($"    Third Stage:");
+                Debug.Log($"      Best Record: {themeResult.thirdStageBestRecord}");
+                Debug.Log($"      Average Record: {themeResult.thirdStageAverageRecord}");
+                Debug.Log($"    Total:");
+                Debug.Log($"      Best Record: {themeResult.totalBestRecord}");
+                Debug.Log($"      Average Record: {themeResult.totalAverageRecord}");
+                Debug.Log($"      Play Record: {themeResult.totalPlayRecord}");
+                Debug.Log("  -------------------------");
+            }
+        }
+        Debug.Log("============================");
+
+        UpdateGraph(dailyResults);
+    }
+
+    private void UpdateGraph(List<DailyResult> dailyResults)
+    {
+        List<Vector3> totalAveragePoints = new List<Vector3>();
+        List<Vector3> totalBestPoints = new List<Vector3>();
+
+        float panelWidth1 = panelTransform1.rect.width;
+        float panelHeight1 = panelTransform1.rect.height;
+        float panelWidth2 = panelTransform2.rect.width;
+        float panelHeight2 = panelTransform2.rect.height;
+        float xInterval1 = panelWidth1 / (dailyResults.Count - 1);
+        float xInterval2 = panelWidth2 / (dailyResults.Count - 1);
+        float maxValue = GetMaxValue(dailyResults);
+
+        Debug.Log($"Panel1 Width: {panelWidth1}, Height: {panelHeight1}");
+        Debug.Log($"Panel2 Width: {panelWidth2}, Height: {panelHeight2}");
+        Debug.Log($"Max Value: {maxValue}");
+
+        for (int i = 0; i < dailyResults.Count; i++)
+        {
+            var dailyResult = dailyResults[i];
+            float totalAverage = 0f;
+            float totalBest = 0f;
+
+            foreach (var themeResult in dailyResult.result)
+            {
+                totalAverage += themeResult.totalAverageRecord;
+                totalBest += themeResult.totalBestRecord;
+            }
+
+            float normalizedTotalAverage = (totalAverage / maxValue) * panelHeight1;
+            float normalizedTotalBest = (totalBest / maxValue) * panelHeight2;
+
+            Vector2 localPoint1 = new Vector2(i * xInterval1, normalizedTotalAverage);
+            Vector2 localPoint2 = new Vector2(i * xInterval2, normalizedTotalBest);
+
+            totalAveragePoints.Add(panelTransform1.TransformPoint(localPoint1));
+            totalBestPoints.Add(panelTransform2.TransformPoint(localPoint2));
+
+            Debug.Log($"Local Point1: {localPoint1}, Transformed Point1: {panelTransform1.TransformPoint(localPoint1)}");
+            Debug.Log($"Local Point2: {localPoint2}, Transformed Point2: {panelTransform2.TransformPoint(localPoint2)}");
+        }
+
+        totalAverageLineRenderer.positionCount = totalAveragePoints.Count;
+        totalBestLineRenderer.positionCount = totalBestPoints.Count;
+
+        totalAverageLineRenderer.SetPositions(totalAveragePoints.ToArray());
+        totalBestLineRenderer.SetPositions(totalBestPoints.ToArray());
+    }
+
+    private float GetMaxValue(List<DailyResult> dailyResults)
+    {
+        float maxValue = 0f;
+
+        foreach (var dailyResult in dailyResults)
+        {
+            foreach (var themeResult in dailyResult.result)
+            {
+                if (themeResult.totalAverageRecord > maxValue)
+                    maxValue = themeResult.totalAverageRecord;
+                if (themeResult.totalBestRecord > maxValue)
+                    maxValue = themeResult.totalBestRecord;
             }
         }
 
-        Debug.Log($"Total themes to draw (Best): {themeBestData.Count}");
-        Debug.Log($"Total themes to draw (Average): {themeAverageData.Count}");
-        graphDrawer.DrawGraphs(themeBestData, themeAverageData, bestGraphPanel, averageGraphPanel);
-    }
-
-    private void DisplayThemeResult(string date, ThemeResult themeResult)
-    {
-        Debug.Log($"Date: {date}, Theme: {themeResult.theme}");
-        Debug.Log($"  First Stage - Best: {themeResult.firstStageBestRecord}, Avg: {themeResult.firstStageAverageRecord}");
-        Debug.Log($"  Second Stage - Best: {themeResult.secondStageBestRecord}, Avg: {themeResult.secondStageAverageRecord}");
-        Debug.Log($"  Third Stage - Best: {themeResult.thirdStageBestRecord}, Avg: {themeResult.thirdStageAverageRecord}");
-        Debug.Log($"  Total - Best: {themeResult.totalBestRecord}, Avg: {themeResult.totalAverageRecord}, Plays: {themeResult.totalPlayRecord}");
-        Debug.Log("  -------------------------");
+        return maxValue;
     }
 }
