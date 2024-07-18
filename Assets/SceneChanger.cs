@@ -9,6 +9,10 @@ public class SceneChanger : MonoBehaviour
 
     private void Update()
     {
+        if (Loading.sceneLoadedCount == 3)
+        {
+            Loading.CompleteLoad();
+        }
         if (isLoading && !Loading.isLoading)
         {
             ChangeScene();

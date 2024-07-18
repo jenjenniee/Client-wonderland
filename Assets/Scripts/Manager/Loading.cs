@@ -7,7 +7,7 @@ static public class Loading
 {
     static public bool isLoading;
     static public bool isError = false;
-
+    static public int sceneLoadedCount = 0;
     static public void OnError()
     {
         isError = true;
@@ -15,5 +15,5 @@ static public class Loading
         isLoading = false;
     }
     static public void SetLoading() { isLoading = true; }
-    static public void CompleteLoad() { isLoading = false; }
+    static public void CompleteLoad() { isLoading = false; sceneLoadedCount = 0; }
 }
