@@ -27,6 +27,12 @@ public class Login : LoginBase
 	[SerializeField]
 	private GameObject loginScenario;
 	
+
+	void Start() {
+		string googlehash = Backend.Utils.GetGoogleHash();
+		inputFieldID.text = googlehash;
+	}
+
 	/// <summary>
 	/// 회원가입에서 로그인으로 넘어올 때 호출
 	/// </summary>

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -46,10 +45,10 @@ public class GetMapInformation : MonoBehaviour
     {
         using (UnityWebRequest request = UnityWebRequest.Get(uri))
         {
-            // ¿äÃ» º¸³»±â
+            // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             yield return request.SendWebRequest();
 
-            // ¿À·ù Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
@@ -57,14 +56,14 @@ public class GetMapInformation : MonoBehaviour
             }
             else
             {
-                // ÀÀ´ä ¹Þ±â
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log("Response: " + jsonResponse);
 
-                // JSON ÆÄ½Ì
+                // JSON ï¿½Ä½ï¿½
                 StageResponseData responseData = JsonUtility.FromJson<StageResponseData>(jsonResponse);
 
-                // µ¥ÀÌÅÍ Á¢±Ù
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (responseData.success)
                 {
                     int correct = 0;
