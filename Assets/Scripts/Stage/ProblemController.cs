@@ -333,7 +333,7 @@ public class ProblemController : MonoBehaviour
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 11)
+        if (problemNumber == 3)
         {
             sentenceStageManager.NextStage();
         }
