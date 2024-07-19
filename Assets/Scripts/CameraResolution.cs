@@ -4,7 +4,7 @@ public class CameraResolution : MonoBehaviour
 {
     private void Awake()
     {
-        // ÇØ»óµµ ¼³Á¤ (16:9, 1920x1080)
+        // í•´ìƒë„ ì„¤ì • (16:9, 1920x1080)
         int targetWidth = 1920;
         int targetHeight = 1080;
         Screen.SetResolution(targetWidth, targetHeight, true);
