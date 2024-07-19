@@ -6,6 +6,7 @@ using UnityEngine;
 static public class Loading
 {
     static public bool isLoading;
+    static public bool mapLoading;
     static public bool isError = false;
     static public int sceneLoadedCount = 0;
     static public void OnError()
@@ -13,6 +14,7 @@ static public class Loading
         isError = true;
         Utils.LoadScene("Lobby");
         isLoading = false;
+        mapLoading = false;
     }
     static public void SetLoading() { isLoading = true; }
     static public void CompleteLoad() { isLoading = false; sceneLoadedCount = 0; }

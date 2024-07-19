@@ -193,6 +193,7 @@ public class ProblemController : MonoBehaviour
     /// <param name="chosenNumber"></param>
     private void Choice(int chosenNumber)
     {
+        if (!timerController.onTimer) return;
         timerController.onTimer = false;
         // ���� ���� ����
         AnswerData data = new AnswerData

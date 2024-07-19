@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
 using LitJson;
+using Unity.VisualScripting;
 
 public class UserInfo : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class UserInfo : MonoBehaviour
                     data.emailForFindPassword = json["emailForFindPassword"]?.ToString();
                     data.subscriptionType = json["subscriptionType"]?.ToString();
                     data.federationId = json["federationId"]?.ToString();
+
+                    this.AddComponent<GetMapInformation>();
                 }
                 catch (System.Exception e)
                 {

@@ -18,7 +18,7 @@ public class LobbyScenario : MonoBehaviour
     private void Update()
     {
         //  ε   Ϸ      
-        if (!Loading.isLoading)
+        if (!Loading.isLoading && !Loading.mapLoading)
         {
             foreach (GameObject circle in circles)
             {
@@ -50,6 +50,7 @@ public class LobbyScenario : MonoBehaviour
         {
             //StartCoroutine(AfterLoading());
             PlayerPrefs.SetInt("isLoading", 0);
+            Loading.mapLoading = true;
         }
     }
 
