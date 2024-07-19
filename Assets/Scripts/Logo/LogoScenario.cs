@@ -18,9 +18,11 @@ public class LogoScenario : MonoBehaviour
 		Application.runInBackground = true;
 
 		// 해상도 설정(9:18.5, 1440x2960) 
-		int width	= Screen.width;
-		int height	= (int)(Screen.width * 18.5f / 9);
-		Screen.SetResolution(width, height, true);
+		//int width	= Screen.width;
+		//int height	= (int)(Screen.width * 16f / 9);
+		//Screen.SetResolution(1920, 1080, true);
+
+
 
 		// 화면이 꺼지지 않도록 설정
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;

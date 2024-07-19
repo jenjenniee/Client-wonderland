@@ -18,7 +18,14 @@ public class LobbyScenario : MonoBehaviour
     private void Update()
     {
         //  ε   Ϸ      
-
+        if (!Loading.isLoading)
+        {
+            foreach (GameObject circle in circles)
+            {
+                circle.SetActive(false);
+            }
+            StartCoroutine(FadeUI(0.5f, 0f, logoPanel.GetComponent<CanvasGroup>()));
+        }
     }
 
     private void Awake()
@@ -29,6 +36,7 @@ public class LobbyScenario : MonoBehaviour
 
     private void Start()
     {
+        BackendGameData.Instance.GameDataLoad();
         if (PlayerPrefs.GetInt("isLoading") != 1)
         {
             foreach (GameObject s in set)
@@ -40,10 +48,9 @@ public class LobbyScenario : MonoBehaviour
         }
         else
         {
-            StartCoroutine(AfterLoading());
+            //StartCoroutine(AfterLoading());
             PlayerPrefs.SetInt("isLoading", 0);
         }
-        BackendGameData.Instance.GameDataLoad();
     }
 
     IEnumerator FadeUI(float duration, float targetAlpha, CanvasGroup ui)
@@ -61,16 +68,6 @@ public class LobbyScenario : MonoBehaviour
         logoPanel.SetActive(false);
 
         StartCoroutine(AfterFade());
-    }
-
-    IEnumerator AfterLoading()
-    {
-        yield return new WaitForSecondsRealtime(2f);
-        foreach (GameObject circle in circles)
-        {
-            circle.SetActive(false);
-        }
-        StartCoroutine(FadeUI(0.5f, 0f, logoPanel.GetComponent<CanvasGroup>()));
     }
     IEnumerator AfterFade()
     {
