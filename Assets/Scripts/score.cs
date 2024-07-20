@@ -67,7 +67,8 @@ public class score : MonoBehaviour
         }
 
         graphManager.DrawGraphs(dailyAverageList, dailyBestList, graphPanel);
-        themeInfoDisplay.DisplayThemeInfo(dailyResults[dailyResults.Count - 1].result);  // 가장 최근 날짜의 테마 정보 표시
+        //themeInfoDisplay.DisplayThemeInfo(dailyResults[dailyResults.Count - 1].result);  // 가장 최근 날짜의 테마 정보 표시
+        /*  데이터 가공  */
     }
 
     private void Start()
