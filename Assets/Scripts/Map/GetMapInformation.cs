@@ -72,15 +72,15 @@ public class GetMapInformation : MonoBehaviour
                         correct += stageData.correctAnswers;
                     }
                     Star.SetStar(idx + 1, correct);
-                    Loading.mapLoading = false;
                 }
                 else
                 {
                     Star.SetStar(idx + 1, -1);
                     Debug.LogError("Request failed with message: " + responseData.message);
-                    Loading.mapLoading = false;
                 }
             }
+            // 404, 200 모두 로드된 걸로 판단.
+            Loading.mapLoading++;
         }
     }
 }

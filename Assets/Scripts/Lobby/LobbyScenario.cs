@@ -18,13 +18,14 @@ public class LobbyScenario : MonoBehaviour
     private void Update()
     {
         //  ε   Ϸ      
-        if (!Loading.isLoading && !Loading.mapLoading)
+        if (!Loading.isLoading && Loading.mapLoading == 3)
         {
             foreach (GameObject circle in circles)
             {
                 circle.SetActive(false);
             }
             StartCoroutine(FadeUI(0.5f, 0f, logoPanel.GetComponent<CanvasGroup>()));
+            Loading.CompleteLoad();
         }
     }
 
@@ -45,12 +46,13 @@ public class LobbyScenario : MonoBehaviour
             }
             logoPanel.SetActive(false);
             sceneGroup.SetActive(true);
+            Loading.mapLoading = 3;
         }
         else
         {
             //StartCoroutine(AfterLoading());
             PlayerPrefs.SetInt("isLoading", 0);
-            Loading.mapLoading = true;
+            Loading.mapLoading = 0;
         }
     }
 
