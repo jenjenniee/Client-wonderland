@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Graph : MonoBehaviour
 {
     [SerializeField] private float pointSize = 10f;
     [SerializeField] private float yPadding = 0.1f;
-    [SerializeField] private Text[] dateLabels; // X축 날짜 레이블을 위한 Text 컴포넌트 배열
+    [SerializeField] private TextMeshProUGUI[] dateLabels; // X축 날짜 레이블을 위한 Text 컴포넌트 배열
 
     public void DrawGraphs(List<float> averageList, List<float> bestList, RectTransform graphContainer)
     {
@@ -24,7 +25,9 @@ public class Graph : MonoBehaviour
         maxValue += valueRange * yPadding;
         valueRange = maxValue - minValue;
 
-        float xStep = graphWidth / (averageList.Count - 1);
+        //float xStep = graphWidth / (averageList.Count - 1);
+        // 날짜 수 7로 고정
+        float xStep = graphWidth / 6;
 
         DrawGraph(averageList, graphContainer, Color.red, xStep, graphHeight, minValue, valueRange);
         DrawGraph(bestList, graphContainer, Color.blue, xStep, graphHeight, minValue, valueRange);
@@ -47,6 +50,7 @@ public class Graph : MonoBehaviour
                 Vector2 pointB = pointObject.GetComponent<RectTransform>().anchoredPosition;
                 CreateConnection(pointA, pointB, graphContainer, color);
             }
+            CreateScoreText(new Vector2(xPos, yPos), graphContainer, valueList[i]);
             lastPointObject = pointObject;
         }
     }
@@ -76,6 +80,21 @@ public class Graph : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+    private void CreateScoreText(Vector2 anchoredPosition, RectTransform graphContainer, float value)
+    {
+        GameObject textObject = new GameObject("pointScore", typeof(TextMeshProUGUI));
+        textObject.transform.SetParent(graphContainer, false);
+        RectTransform textRectTransform = textObject.GetComponent<RectTransform>();
+        textRectTransform.anchoredPosition = new Vector2(anchoredPosition.x, anchoredPosition.y + 4f);
+        textRectTransform.sizeDelta = new Vector2(50, 20);
+        textRectTransform.anchorMin = new Vector2(0, 0);
+        textRectTransform.anchorMax = new Vector2(0, 0);
+        textRectTransform.pivot = new Vector2(0, 0);
+        TextMeshProUGUI text = textObject.GetComponent<TextMeshProUGUI>();
+        text.text = string.Format("{0:F1}", value);
+        text.fontSize = 14f;
+        text.color = Color.black;
     }
 
     private GameObject CreatePoint(Vector2 anchoredPosition, RectTransform graphContainer, Color color)
