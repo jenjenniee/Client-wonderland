@@ -60,6 +60,9 @@ public class SentenceStageManager : MonoBehaviour
     // 게임 끝나고 게임 정보 업데이트
     public GameObject getMapInformation;
 
+    AudioManager audiomanager;
+    public AudioClip clip;
+
     private void Start()
     {
         postAnswerUrl = "https://worderland.kro.kr/api/answer";
@@ -86,6 +89,8 @@ public class SentenceStageManager : MonoBehaviour
 
         //stage3Url = $"https://worderland.kro.kr/api/question/{SceneTheme.theme}?stage=3";
         //StartCoroutine(GetRequest(stage3Url));
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
     }
 
     public void NextStage()
@@ -277,7 +282,7 @@ public class SentenceStageManager : MonoBehaviour
 
         polariodFilm.SetActive(true);
         background.SetActive(true);
-
+        audiomanager.PlaySFX(clip);
         yield return new WaitForSecondsRealtime(1f);
 
         float time = 0f;
