@@ -8,10 +8,13 @@ public class DrawScript : MonoBehaviour
     private bool isDrawing = false;
     private bool canDrawing = false;
     private Vector2 previousPos;
+    AudioManager audiomanager;
+    public AudioClip clip;
 
     void Start()
     {
         InitializeTexture();
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void CanDrawing()
@@ -75,6 +78,7 @@ public class DrawScript : MonoBehaviour
                 previousPos = currentPos;
                 drawTexture.Apply();
             }
+            audiomanager.PlaySFX(clip);
         }
     }
 
