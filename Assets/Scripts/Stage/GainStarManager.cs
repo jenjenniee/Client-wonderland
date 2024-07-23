@@ -22,10 +22,13 @@ public class GainStarManager : MonoBehaviour
 
     public void GainStar(int stage, int starNumber)
     {
+        Debug.Log(starNumber);
+        Debug.Log(clip.Length);
         // ���� ȹ���� �� �ִٸ�,
-        if(!Star.GetStar(stage, starNumber))
+        if (!Star.GetStar(stage, starNumber))
         {
             // �� ȹ�� �ִϸ��̼�
+            
             starPanel.SetActive(true);
             text.text = achiveText[starNumber];
             audiomanager.PlaySFX(clip[starNumber]);

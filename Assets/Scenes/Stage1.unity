@@ -12390,7 +12390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldObject: {fileID: 354656827}
-  offset: {x: 0, y: 330}
+  offset: {x: 0, y: 130}
 --- !u!114 &4951519785133224987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13091,7 +13091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldObject: {fileID: 2100718351}
-  offset: {x: 0, y: 330}
+  offset: {x: 0, y: 130}
 --- !u!222 &9188782875951763409
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13222,7 +13222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldObject: {fileID: 824537931}
-  offset: {x: 0, y: 330}
+  offset: {x: 0, y: 130}
 --- !u!222 &9188782876003106473
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13353,7 +13353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldObject: {fileID: 136289889}
-  offset: {x: 0, y: 330}
+  offset: {x: 0, y: 130}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
