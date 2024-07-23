@@ -12,7 +12,7 @@ static public class Loading
     static public void OnError()
     {
         isError = true;
-        Utils.LoadScene("Lobby");
+        Utils.LoadScene("Loby");
         isLoading = false;
         mapLoading = 0;
     }
