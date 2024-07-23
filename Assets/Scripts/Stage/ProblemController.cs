@@ -350,6 +350,16 @@ public class ProblemController : MonoBehaviour
                 // Problem Title
                 textProblem.text = words[0];
 
+                // Text-to-Speech
+                ttsText.GetComponent<TextMeshProUGUI>().text = words[0];        // 문제 읽어주기.
+                // if theme is carousel,
+                if (SceneTheme.theme == "carousel")
+                {
+                    ttsText.GetComponent<TextMeshProUGUI>().text += words[5];   // 발음기호까지 읽어주기.
+                }
+                ttsButton.SetActive(true);
+
+
                 // set problem's answers
                 for (int i = 0; i < 4; i++)
                 {
