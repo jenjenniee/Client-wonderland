@@ -1833,6 +1833,10 @@ MonoBehaviour:
   starPanel: {fileID: 447280125}
   greatText: {fileID: 915760943}
   text: {fileID: 915760940}
+  clip:
+  - {fileID: 8300000, guid: 2c7ac1f54e7c7ad48b58f5e6520c55cc, type: 3}
+  - {fileID: 8300000, guid: c3c7f5d7a7b534043b8cadd442cd7f70, type: 3}
+  - {fileID: 8300000, guid: 8c9f72a2e78a5a2408ff187cf4faecc6, type: 3}
 --- !u!1 &220359890
 GameObject:
   m_ObjectHideFlags: 0

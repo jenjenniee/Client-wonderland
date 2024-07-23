@@ -9,24 +9,28 @@ public class GainStarManager : MonoBehaviour
     public GameObject starPanel;
     public CanvasGroup greatText;
     public TextMeshProUGUI text;
+    AudioManager audiomanager;
+    public AudioClip []clip;
 
     private string[] achiveText = { "GOOD!", "GREAT!!", "PERFECT!!!" };
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void GainStar(int stage, int starNumber)
     {
-        // º°À» È¹µæÇÒ ¼ö ÀÖ´Ù¸é,
+        // ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½,
         if(!Star.GetStar(stage, starNumber))
         {
-            // º° È¹µæ ¾Ö´Ï¸ÞÀÌ¼Ç
+            // ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             starPanel.SetActive(true);
             text.text = achiveText[starNumber];
+            audiomanager.PlaySFX(clip[starNumber]);
         }
+
     }
 
     public void SetActiveFalsePanel()

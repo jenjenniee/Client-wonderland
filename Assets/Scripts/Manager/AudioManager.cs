@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
     [Header("--------- Audio Clip -----------")]
     public AudioClip background;
     public AudioClip click;
+    public AudioClip good;
+    public AudioClip great;
+    public AudioClip excellent;
+    public AudioClip shutter;
     //public AudioClip attack;
     //public AudioClip boom;
     //public AudioClip hide;
