@@ -14,7 +14,6 @@ public class TTSButtonManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private TextMeshProUGUI inputField;
     AudioManager audiomanager;
-    public AudioClip clip;
     private Action<AudioClip> _audioClipReceived;
     private Action<BadRequestData> _errorReceived;
 
@@ -39,9 +38,9 @@ public class TTSButtonManager : MonoBehaviour
     private void AudioClipReceived(AudioClip clip)
     {
         audioSource.Stop();
-        //audioSource.clip = clip;
-        //audioSource.Play();
-        audiomanager.PlaySFX(clip);
+        audioSource.clip = clip;
+        audioSource.Play();
+        //audiomanager.PlaySFX(clip);
     }
     
    

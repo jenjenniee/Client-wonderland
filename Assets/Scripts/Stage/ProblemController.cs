@@ -394,7 +394,7 @@ public class ProblemController : MonoBehaviour
                     textProblem.text = (SceneTheme.theme == "carousel") ? "Listen to the following word and choose the correct one:" : $"Listen and complete the word:";
                     textFollowingWord.text = $"{words[0]}";
                     // words[1]은 TTS용
-                    ttsText.GetComponent<TextMeshProUGUI>().text = words[1];
+                    ttsText.GetComponent<TextMeshProUGUI>().text = textProblem.text + words[1];
                     ttsButton.SetActive(true);
                 }
                 ocrPanel.SetActive(true);

@@ -67,7 +67,7 @@ public class ProblemData : MonoBehaviour
                     problemData[stage - 1] = responseData.data.Clone() as QuestionData[];
                     Debug.Log($"Response: {problemData[stage - 1]}");
                     // 2 스테이지 문제라면, 미리 이미지 다운로드.
-                    if (stage == 2)
+                    if (stage == 2 && SceneTheme.theme != "carousel")
                     {
                         CheckIsImageProblem();
                     }

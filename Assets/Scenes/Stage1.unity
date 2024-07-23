@@ -1848,6 +1848,7 @@ GameObject:
   - component: {fileID: 220359891}
   - component: {fileID: 220359893}
   - component: {fileID: 220359892}
+  - component: {fileID: 220359894}
   m_Layer: 0
   m_Name: TTS
   m_TagString: Untagged
@@ -1896,6 +1897,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9824d3cfac658c44b96a0f19054cf414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &220359894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220359890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e6aa2c6c21e694aa56073b1c3db8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &221666764
@@ -3799,6 +3812,7 @@ MonoBehaviour:
   wrong: {fileID: 1620013738}
   starAnimation: {fileID: 210652883}
   getMapInformation: {fileID: 1248522396}
+  clip: {fileID: 0}
 --- !u!4 &519913254
 Transform:
   m_ObjectHideFlags: 0
