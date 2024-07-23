@@ -17,7 +17,6 @@ public class GainStarManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void GainStar(int stage, int starNumber)
@@ -31,6 +30,7 @@ public class GainStarManager : MonoBehaviour
             
             starPanel.SetActive(true);
             text.text = achiveText[starNumber];
+            audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
             audiomanager.PlaySFX(clip[starNumber]);
         }
 
