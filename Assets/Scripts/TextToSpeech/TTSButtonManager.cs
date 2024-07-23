@@ -13,10 +13,16 @@ public class TTSButtonManager : MonoBehaviour
     [SerializeField] private TextToSpeech textToSpeech;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private TextMeshProUGUI inputField;
-
+    AudioManager audiomanager;
+    public AudioClip clip;
     private Action<AudioClip> _audioClipReceived;
     private Action<BadRequestData> _errorReceived;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
     public void PressBtn()
     {
         _errorReceived += ErrorReceived;
@@ -33,7 +39,10 @@ public class TTSButtonManager : MonoBehaviour
     private void AudioClipReceived(AudioClip clip)
     {
         audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.Play();
+        //audioSource.clip = clip;
+        //audioSource.Play();
+        audiomanager.PlaySFX(clip);
     }
+    
+   
 }

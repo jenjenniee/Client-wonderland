@@ -10,12 +10,12 @@ public class AudioManager : MonoBehaviour
     [Header("--------- Audio Clip -----------")]
     public AudioClip background;
     public AudioClip click;
-    public AudioClip attack;
-    public AudioClip boom;
-    public AudioClip hide;
-    public AudioClip Bubble;
-    public AudioClip Jungle;
-    public AudioClip Sea;
+    //public AudioClip attack;
+    //public AudioClip boom;
+    //public AudioClip hide;
+    //public AudioClip Bubble;
+    //public AudioClip Jungle;
+    //public AudioClip Sea;
 
     [SerializeField] private float transitionTime = 2f; // 전환 시간 (초)
 
@@ -38,7 +38,10 @@ public class AudioManager : MonoBehaviour
     {
         SFXSource.PlayOneShot(clip);
     }
-
+    public void Click()
+    {
+        SFXSource.PlayOneShot(click);
+    }
     public void ChangeBackground(AudioClip newClip)
     {
         StartCoroutine(TransitionMusic(newClip));
@@ -46,7 +49,6 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator TransitionMusic(AudioClip newClip)
     {
-        Debug.Log("nuna"); 
         // 현재 음악의 초기 볼륨 저장
         float startVolume = musicSource.volume;
 

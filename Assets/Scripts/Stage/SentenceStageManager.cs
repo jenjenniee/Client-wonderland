@@ -119,11 +119,11 @@ public class SentenceStageManager : MonoBehaviour
         }
 
         // 단어 위치 설정
-        rectTransform.position = new Vector2(currentX, currentY);
-        //rectTransform.anchoredPosition = new Vector2(currentX, currentY);
-        //currentX += preferredWidth + 10f; // 다음 단어 위치로 이동
+        //rectTransform.position = new Vector2(currentX, currentY);
+        rectTransform.anchoredPosition = new Vector2(currentX, currentY);
+        currentX += preferredWidth + 7f; // 다음 단어 위치로 이동
 
-        currentX += 15.0f;
+        //currentX += 15.0f;
 
         // 현재 줄에서 가장 높은 단어의 높이를 저장
         if (preferredHeight > maxHeightInRow)
