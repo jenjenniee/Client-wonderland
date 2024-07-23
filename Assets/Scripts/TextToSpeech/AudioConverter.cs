@@ -9,7 +9,7 @@ namespace GoogleTextToSpeech.Scripts
 {
     public class AudioConverter : MonoBehaviour
     {
-        private const string Mp3FileName = "audio.mp3";
+        private const string Mp3FileName = "audio.mpeg";
 
         public static void SaveTextToMp3(AudioData audioData)
         {

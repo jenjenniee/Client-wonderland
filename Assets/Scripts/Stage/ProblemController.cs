@@ -61,18 +61,16 @@ public class ProblemController : MonoBehaviour
     private int problemNumber = 0;
     private int stage1Number = 0;
     private int stage2Number = 0;
-    private bool timeout = false;
 
     // 별 애니메이션을 처리할 오브젝트
     public GameObject starAnimation;
 
-    private TimerController timerController;
+    //private TimerController timerController;
     [SerializeField]
     private SentenceStageManager sentenceStageManager;
     //private bool solvingProblem = false;
     private int problemStyle = 0;
 
-    private string getProblemUrl;           // server url
     private string postAnswerUrl;
     QuestionData[][] problemData = new QuestionData[2][];             // problem data from server. 10 problems get into this variable.
     public TextMeshProUGUI tmp;
@@ -99,8 +97,8 @@ public class ProblemController : MonoBehaviour
         problemData = ProblemData.instance.problemData.Clone() as QuestionData[][];
         spriteFromServer = ProblemData.instance.spriteFromServer;
 
-        timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
-        timerController.onTimer = false;
+        //timerController = GameObject.Find("Gauge Front").GetComponent<TimerController>();
+        //timerController.onTimer = false;
         
         foreach (GameObject animal in animals)
         {
@@ -112,11 +110,13 @@ public class ProblemController : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (!timeout && timerController.integerTimer == 0)
         {
             timeout = true;
             StartCoroutine(TimeOut());
         }
+        */
     }
 
     private void SetHeart() 
@@ -193,8 +193,8 @@ public class ProblemController : MonoBehaviour
     /// <param name="chosenNumber"></param>
     private void Choice(int chosenNumber)
     {
-        if (!timerController.onTimer) return;
-        timerController.onTimer = false;
+        //if (!timerController.onTimer) return;
+        //timerController.onTimer = false;
         // ���� ���� ����
         AnswerData data = new AnswerData
         {
@@ -225,10 +225,12 @@ public class ProblemController : MonoBehaviour
     /// <summary>
     /// 버튼을 눌렀는데, TimeOut이 되는 경우를 방지하기 위함
     /// </summary>
+    /*
     public void TimeStop()
     {
         timerController.onTimer = false;
     }
+    */
 
     public void OnSubmitOCR(string textOCR)
     {
@@ -241,7 +243,7 @@ public class ProblemController : MonoBehaviour
 
 
         //ocrCanvasGroup.interactable = false;
-        timerController.onTimer = false;
+        //timerController.onTimer = false;
         // ���� ���� ����
         Debug.Log($"questionID: {problemData[1][stage2Number].questionId}, textOCR: {answerText}, answer: {problemData[1][stage2Number].content}");
         AnswerData data = new AnswerData
@@ -322,8 +324,8 @@ public class ProblemController : MonoBehaviour
         // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
         if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
 
-        timerController.NewProblemTimer(problemStyle == 0 ? 10f : 20f);
-        timerController.onTimer = false;
+        //timerController.NewProblemTimer(problemStyle == 0 ? 10f : 20f);
+        //timerController.onTimer = false;
         heartMove.SetActive(false);
 
         // ���� ��ȣ ����
@@ -394,8 +396,8 @@ public class ProblemController : MonoBehaviour
     private IEnumerator StartProblem(float delayTime)
     {
         yield return new WaitForSecondsRealtime(delayTime);
-        timerController.onTimer = true;
-        timeout = false;
+        //timerController.onTimer = true;
+        //timeout = false;
         ocrCanvasGroup.interactable = true;
         ocrPanel.GetComponent<DrawScript>().CanDrawing();
     }

@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e09be29deb2cb4b83ad7880b54783f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b3a5dcd04a684640ad673dda941b2b0, type: 3}
   m_Name: en-US-Wavenet-D
   m_EditorClassIdentifier: 
   languageCode: en-US
   name: en-US-Wavenet-D
+  speed: 1
+  pitch: 0
