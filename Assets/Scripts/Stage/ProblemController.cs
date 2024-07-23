@@ -70,7 +70,7 @@ public class ProblemController : MonoBehaviour
     [SerializeField]
     private SentenceStageManager sentenceStageManager;
     //private bool solvingProblem = false;
-    private int problemStyle;
+    private int problemStyle = 0;
 
     private string getProblemUrl;           // server url
     private string postAnswerUrl;
@@ -319,12 +319,8 @@ public class ProblemController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delayTime);
 
-        problemStyle = UnityEngine.Random.Range(0, 2);
-
         // stage 1 다 끝났는데 problemStyle == 0 이면, 1로 바꿈
         if (stage1Number == 5 && problemStyle == 0) problemStyle = 1;
-        // stage 2 다 끝났는데 problemStyle == 1 이면, 0으로 바꿈
-        if (stage2Number == 5 && problemStyle == 1) problemStyle = 0;
 
         timerController.NewProblemTimer(problemStyle == 0 ? 10f : 20f);
         timerController.onTimer = false;
@@ -334,7 +330,7 @@ public class ProblemController : MonoBehaviour
         problemNumber++;
 
         // �������� 00�� �����ϸ� ���� ����������
-        if (problemNumber == 3)
+        if (problemNumber == 11)
         {
             sentenceStageManager.NextStage();
         }
