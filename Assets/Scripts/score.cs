@@ -85,7 +85,8 @@ public class score : MonoBehaviour
                 dailyBestList.Add(dailyBest);
                 dailyAverageList.Add(dailySum / dailyResult.result.Count);
             }
-
+            dailyBestList.Reverse();
+            dailyAverageList.Reverse();
             graphManager.DrawGraphs(dailyAverageList, dailyBestList, graphPanel);
         }
         else
@@ -97,6 +98,8 @@ public class score : MonoBehaviour
                 themeBestList.Add(dailyResult.result[theme - 1].totalBestRecord);
                 themeAverageList.Add(dailyResult.result[theme - 1].totalAverageRecord);
             }
+            themeBestList.Reverse();
+            themeAverageList.Reverse();
             graphManager.DrawGraphs(themeAverageList, themeBestList, graphPanel);
         }
         //themeInfoDisplay.DisplayThemeInfo(dailyResults[dailyResults.Count - 1].result);  // 가장 최근 날짜의 테마 정보 표시

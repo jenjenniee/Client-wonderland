@@ -381,7 +381,7 @@ public class ProblemController : MonoBehaviour
                 else
                 {
                     string[] words = problemData[1][stage2Number].content.Split(",");
-                    textProblem.text = $"Listen and complete the word:";
+                    textProblem.text = (SceneTheme.theme == "carousel") ? "Listen to the following word and choose the correct one:" : $"Listen and complete the word:";
                     textFollowingWord.text = $"{words[0]}";
                     // words[1]은 TTS용
                     ttsText.GetComponent<TextMeshProUGUI>().text = words[1];
