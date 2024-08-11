@@ -13,6 +13,7 @@
 - Project Poster
 - Tech Stack
 - Architecture Structure
+- Role
 - - -
 ### 📣 EKC2024 in UK - Electrical, Electronics & Information Engineering Poster Award! 📣
 ![IMG_4754](https://github.com/user-attachments/assets/66f23ac2-24a4-415b-bff1-77fd6b81197b)
