@@ -42,9 +42,9 @@
 
 - - -
 ### ✔️ Role
-|Name|Role| |
-|------|---|---|
-|Lee JinGyeong|Research, GPT Prompt Engineering, TTS/GPT Function Implementation, Creating Game Questions, Poster Making| In this project, I dedicated myself not only to GPT prompt engineering and backend development related to my major, but also to research on dyslexia. To ensure the credibility of our research, I reviewed various papers and established a solid foundation, which I used to create the poster. This process allowed me to grow significantly!!|
+|Name|Role|More codes| |
+|------|---|--|---|
+|Lee JinGyeong|Research, GPT Prompt Engineering, TTS/GPT Function Implementation, Creating Game Questions, Poster Making|https://github.com/ICCAS2024-TightPattern/tts, https://github.com/ICCAS2024-TightPattern/worderland/tree/jingyeong| In this project, I dedicated myself not only to GPT prompt engineering and backend development related to my major, but also to research on dyslexia. To ensure the credibility of our research, I reviewed various papers and established a solid foundation, which I used to create the poster. This process allowed me to grow significantly!!|
 
 
 ## Install Project
