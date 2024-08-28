@@ -18,7 +18,6 @@
 ### 📣 EKC2024 in UK - Electrical, Electronics & Information Engineering Poster Award! 📣
 <div style="display: flex; justify-content: center;">
   <img src="https://github.com/user-attachments/assets/66f23ac2-24a4-415b-bff1-77fd6b81197b" alt="IMG_4754" style="height: 600px; margin-right: 10px;">
-  <img src="https://github.com/user-attachments/assets/94ec2f6d-40bf-444f-8b16-42b4237c8655" alt="IMG_5951" style="height: 600px;">
 </div>
 
 - - -
